@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Main extends Application {
-
+//main
     @Override
     public void start(Stage primaryStage) {
 

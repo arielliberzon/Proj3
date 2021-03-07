@@ -7,7 +7,7 @@ import java.util.LinkedList;
 public class RaceTrack {
 
     //List of cars in track
-    private LinkedList<Vehicle> cars = new LinkedList<Vehicle>();
+    private LinkedList<Car> cars = new LinkedList<Car>();
 
     //List of check points
     private LinkedList<CheckPoint> checkPoints = new LinkedList<CheckPoint>();
@@ -24,7 +24,7 @@ public class RaceTrack {
     }
 
     //Puts the cars in track and calls to set up their routes
-    public void placeCarsOnTrack(Vehicle c1, Vehicle c2, Vehicle c3, Vehicle c4){
+    public void placeCarsOnTrack(Car c1, Car c2, Car c3, Car c4){
         setUpRoutes(c1, 0);
         setUpRoutes(c2, 1);
         setUpRoutes(c3, 2);
@@ -37,7 +37,7 @@ public class RaceTrack {
     }
 
     //Sets up the cars routes(In order of how they are going to pass them A, B, C, D or D, A, B, C etc.)
-    private void setUpRoutes(Vehicle car, int index){
+    private void setUpRoutes(Car car, int index){
         LinkedList<CheckPoint> path = new LinkedList<CheckPoint>(); //List to add checkpoints
         while(index != 4){                      //Add all in order
             path.add(checkPoints.get(index));
@@ -77,7 +77,7 @@ public class RaceTrack {
     }
 
     //Turns car if cars reached checkpoint. Sets new orientation
-    private boolean turnCar(Vehicle car){
+    private boolean turnCar(Car car){
         int orientation = car.getOrientation();
         double xCur = car.getCenterX();                                 //Current x position of car
         double yCur = car.getCenterY();                                 //Current y position of car
@@ -103,7 +103,7 @@ public class RaceTrack {
     }
 
     //Moves car depending on orientation
-    public void move(Vehicle car){
+    public void move(Car car){
         turnCar(car);
         int orientation = car.getOrientation();
         double x = car.getCenterX();
@@ -127,7 +127,7 @@ public class RaceTrack {
     }
 
     //Check if car finished. If odometer >=  length turn car off
-    private boolean checkForFinish(Vehicle car) {
+    private boolean checkForFinish(Car car) {
         if(car.getOdometer() >= length) {
             car.setActive(false);
             car.endTime();
@@ -161,11 +161,11 @@ public class RaceTrack {
     }
 
 
-    public LinkedList<Vehicle> getCars() {
+    public LinkedList<Car> getCars() {
         return cars;
     }
 
-    public void setCars(LinkedList<Vehicle> cars) {
+    public void setCars(LinkedList<Car> cars) {
         this.cars = cars;
     }
 

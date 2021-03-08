@@ -42,7 +42,7 @@ public class Main extends Application {
         list[0].addAll(cp1, cp2, cp3, cp4);
 
         //Add roads
-        //list[0] = RaceTrack.getLines(list[0]);
+        list[0] = track.setRoads(list[0]);
 
         //Add cars
         list[0].addAll(one, two, three, four);

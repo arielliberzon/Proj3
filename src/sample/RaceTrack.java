@@ -148,8 +148,21 @@ public class RaceTrack {
         return slowest;
     }
 
-    public ObservableList getRoads(ObservableList list){
-        //Line l1 = new
+    public ObservableList setRoads(ObservableList list){
+        placeRoad(checkPoints.get(0), checkPoints.get(1), list);
+        placeRoad(checkPoints.get(1), checkPoints.get(2), list);
+        placeRoad(checkPoints.get(2), checkPoints.get(3), list);
+        placeRoad(checkPoints.get(3), checkPoints.get(0), list);
+        return list;
+    }
+
+    private ObservableList placeRoad(CheckPoint start, CheckPoint end, ObservableList list) {
+        Line line = new Line();
+        line.setStartX(start.getCenterX());
+        line.setEndX(end.getCenterX());
+        line.setStartY(start.getCenterY());
+        line.setEndY(end.getCenterY());
+        list.add(line);
         return list;
     }
 

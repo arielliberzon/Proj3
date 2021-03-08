@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Main extends Application {
-//main1234
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -32,10 +32,6 @@ public class Main extends Application {
         CheckPoint cp3 = new CheckPoint( 500, 500, "C");
         CheckPoint cp4 = new CheckPoint( 100, 500, "D");
         track.addCheckPoints(cp1, cp2, cp3, cp4);
-        Road r1 = new Road(cp1, cp2);
-        Road r2 = new Road(cp2, cp3);
-        Road r3 = new Road(cp3, cp4);
-        Road r4 = new Road(cp4, cp1);
         Car one = new Car(1, cp1.getCenterX(), cp1.getCenterY(), 10, Color.RED, "Red");   //Looking left
         Car two = new Car(2, cp2.getCenterX(), cp2.getCenterY(), 5, Color.GREEN, "Green");   //Looking down
         Car three = new Car(3, cp3.getCenterX(), cp3.getCenterY(), 4, Color.BLACK, "Black");   //Looking right
@@ -46,7 +42,7 @@ public class Main extends Application {
         list[0].addAll(cp1, cp2, cp3, cp4);
 
         //Add roads
-        list[0].addAll(r1, r2, r3, r4);
+        //list[0] = RaceTrack.getLines(list[0]);
 
         //Add cars
         list[0].addAll(one, two, three, four);

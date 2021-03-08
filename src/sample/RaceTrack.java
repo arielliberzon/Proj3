@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.collections.ObservableList;
+import javafx.scene.shape.Line;
 
 import java.util.LinkedList;
 
@@ -145,6 +146,11 @@ public class RaceTrack {
                 slowest = cars.get(i).getSpeed();
         }
         return slowest;
+    }
+
+    public ObservableList getRoads(ObservableList list){
+        //Line l1 = new
+        return list;
     }
 
     //Get length of track

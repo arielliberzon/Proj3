@@ -41,8 +41,8 @@ public class Main extends Application {
         //Add checkpoints
         list[0].addAll(cp1, cp2, cp3, cp4);
 
-        //Add roads
-        list[0] = track.setRoads(list[0]);
+        //Add lines in between points
+        track.setLines(list[0]);
 
         //Add cars
         list[0].addAll(one, two, three, four);

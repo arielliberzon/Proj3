@@ -9,6 +9,7 @@ import java.util.LinkedList;
 
 public class Car extends Circle {
 
+    private int carNum;
     private Color color;
     //Attributes not used yet
     private Transmission transmission;
@@ -60,8 +61,9 @@ public class Car extends Circle {
         this.brand = brand;
     }
 
-    public Car(String model, Engine engineHP, Tires tireRating,
+    public Car(int carNum, String model, Engine engineHP, Tires tireRating,
                Transmission transmission, Color color) {
+        this.carNum = carNum;
         this.model = model;
         this.engineHP = engineHP;
         this.tireRating = tireRating;

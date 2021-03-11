@@ -118,7 +118,7 @@ public class StartMenu {
         Transmission transmission = new Transmission(data[2]);
         Color color = getColor(data[3]);
 
-        Car car = new Car(model, engine, tires, transmission, color);
+        Car car = new Car(playerCount, model, engine, tires, transmission, color);
 
         return car;
     }

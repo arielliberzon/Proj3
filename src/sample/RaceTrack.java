@@ -40,7 +40,11 @@ public class RaceTrack {
     }
     
     public void placeCarsOnTrack(Car[] carArr) {
-        //for int
+        for (int i = 0; i < carArr.length; i++) {
+            setUpRoutes(carArr[i], i);
+            cars.add(carArr[i]);
+        }
+        cars.forEach(car -> car.startTime());
     }
 
     
@@ -60,7 +64,7 @@ public class RaceTrack {
             }
         }
         car.setRoute(path);
-        //car.setCenterX(ge);//Set up route for car
+        //Set up route for car
     }
 
     //Add checkpoints to track

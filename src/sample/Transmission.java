@@ -3,7 +3,7 @@ package sample;
 public class Transmission {
 
     private String tType;
-    private double speed;
+    private int speed;
 
     public Transmission() {
         //FIX
@@ -37,7 +37,7 @@ public class Transmission {
         return speed;
     }
 
-    public void setSpeed(double speed) {
+    public void setSpeed(int speed) {
         this.speed = speed;
     }
 

@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class StartMenu {
 
-    private static int numCars;
+    private static int numCars = 1;
 
     private static int playerCount = 1;
 

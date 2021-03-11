@@ -9,7 +9,10 @@ import java.util.LinkedList;
 
 public class Car extends Circle {
 
+    private int place;
+
     private int carNum;
+
     private Color color;
     //Attributes not used yet
     private Transmission transmission;
@@ -257,5 +260,13 @@ public class Car extends Circle {
 
     public void setCurrentCP(int currentCP) {
         this.currentCP = currentCP;
+    }
+
+    public int getPlace() {
+        return place;
+    }
+
+    public void setPlace(int place) {
+        this.place = place;
     }
 }

@@ -7,6 +7,9 @@ import java.util.LinkedList;
 
 public class RaceTrack {
 
+
+    private Car[] carArr;
+
     //List of cars in track
     private LinkedList<Car> cars = new LinkedList<Car>();
 
@@ -30,6 +33,7 @@ public class RaceTrack {
         setUpRoutes(c2, 1);
         setUpRoutes(c3, 2);
         setUpRoutes(c4, 3);
+
         cars.add(c1);
         cars.add(c2);
         cars.add(c3);

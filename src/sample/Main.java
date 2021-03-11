@@ -15,6 +15,13 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
 
+        int test = StartMenu.firstDisplay();
+        for (int i = 0; i < test; i++) {
+            Car car = StartMenu.secondDisplay();
+            System.out.println(car.toString());
+        }
+
+
         //Set up GUI
         int width = 1024;
         int height = 768;

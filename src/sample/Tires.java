@@ -16,7 +16,14 @@ public class Tires {
     }
 
     private void setSpeed(String tireType) {
-        //FIX
+        if (tireType.equals("Tires 1"))
+            setSpeed(1);
+        if (tireType.equals("Tires 2"))
+            setSpeed(1);
+        if (tireType.equals("Tires 3"))
+            setSpeed(1);
+        if (tireType.equals("Tires 4"))
+            setSpeed(1);
     }
 
     public String getTireType() {

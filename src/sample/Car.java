@@ -9,6 +9,7 @@ import java.util.LinkedList;
 
 public class Car extends Circle {
 
+    private Color color;
     //Attributes not used yet
     private Transmission transmission;
     private Engine engineHP;
@@ -59,6 +60,15 @@ public class Car extends Circle {
         this.brand = brand;
     }
 
+    public Car(String model, Engine engineHP, Tires tireRating,
+               Transmission transmission, Color color) {
+        this.model = model;
+        this.engineHP = engineHP;
+        this.tireRating = tireRating;
+        this.transmission = transmission;
+        this.color = color;
+    }
+
     //Update last checkpoint passed
     public void incrementCP() {
         currentCP++;
@@ -78,9 +88,17 @@ public class Car extends Circle {
     }
 
     //toString to debug
+
+
     @Override
     public String toString() {
-        return "Vehicle: " + brand;
+        return "Car{" +
+                "name=" + model +
+                "color=" + color +
+                ", transmission=" + transmission +
+                ", engineHP=" + engineHP +
+                ", tireRating=" + tireRating +
+                '}';
     }
 
     //Used so far getters and setters

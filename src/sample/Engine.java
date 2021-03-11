@@ -16,7 +16,14 @@ public class Engine {
     }
 
     private void setSpeed(String engineType) {
-        //FIX
+        if (engineType.equals("Engine 1"))
+            speed = 1;
+        if (engineType.equals("Engine 2"))
+            speed = 1;
+        if (engineType.equals("Engine 3"))
+            speed = 1;
+        if (engineType.equals("Engine 4"))
+            speed = 1;
     }
 
     public String getEngineType() {

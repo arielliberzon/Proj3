@@ -3,18 +3,16 @@ package sample;
 import javafx.collections.ObservableList;
 import javafx.scene.shape.Line;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.ArrayList;
 
 public class RaceTrack {
 
-
-    private Car[] carArr;
-
     //List of cars in track
-    private LinkedList<Car> cars = new LinkedList<Car>();
+    private ArrayList<Car> cars = new ArrayList<Car>();
 
     //List of check points
-    private LinkedList<CheckPoint> checkPoints = new LinkedList<CheckPoint>();
+    private ArrayList<CheckPoint> checkPoints = new ArrayList<CheckPoint>();
 
     //Length of track used to calculate when car finishes
     private int length;
@@ -40,10 +38,16 @@ public class RaceTrack {
         cars.add(c4);
         cars.forEach(car -> car.startTime());
     }
+    
+    public void placeCarsOnTrack(Car[] carArr) {
+        //for int
+    }
+
+    
 
     //Sets up the cars routes(In order of how they are going to pass them A, B, C, D or D, A, B, C etc.)
     private void setUpRoutes(Car car, int index){
-        LinkedList<CheckPoint> path = new LinkedList<CheckPoint>(); //List to add checkpoints
+        ArrayList<CheckPoint> path = new ArrayList<CheckPoint>(); //List to add checkpoints
         while(index != 4){                      //Add all in order
             path.add(checkPoints.get(index));
             index++;
@@ -55,7 +59,8 @@ public class RaceTrack {
                 index++;
             }
         }
-        car.setRoute(path);                     //Set up route for car
+        car.setRoute(path);
+        //car.setCenterX(ge);//Set up route for car
     }
 
     //Add checkpoints to track
@@ -183,19 +188,19 @@ public class RaceTrack {
     }
 
 
-    public LinkedList<Car> getCars() {
+    public ArrayList<Car> getCars() {
         return cars;
     }
 
-    public void setCars(LinkedList<Car> cars) {
+    public void setCars(ArrayList<Car> cars) {
         this.cars = cars;
     }
 
-    public LinkedList<CheckPoint> getCheckPoints() {
+    public ArrayList<CheckPoint> getCheckPoints() {
         return checkPoints;
     }
 
-    public void setCheckPoints(LinkedList<CheckPoint> checkPoints) {
+    public void setCheckPoints(ArrayList<CheckPoint> checkPoints) {
         this.checkPoints = checkPoints;
     }
 

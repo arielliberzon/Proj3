@@ -5,7 +5,7 @@ import javafx.scene.shape.Circle;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class Car extends Circle {
 
@@ -38,7 +38,7 @@ public class Car extends Circle {
     private int orientation;
 
     //Route is planned when car is placed in track
-    private LinkedList<CheckPoint> route = new LinkedList<CheckPoint>();
+    private ArrayList<CheckPoint> route = new ArrayList<CheckPoint>();
 
     //Will be later calculated depending on attributes
     private int speed;
@@ -111,11 +111,11 @@ public class Car extends Circle {
         return currentCP;
     }
 
-    public void setRoute(LinkedList<CheckPoint> route) {
+    public void setRoute(ArrayList<CheckPoint> route) {
         this.route = route;
     }
 
-    public LinkedList<CheckPoint> getRoute() {
+    public ArrayList<CheckPoint> getRoute() {
         return route;
     }
 

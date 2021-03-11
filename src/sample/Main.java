@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -15,10 +16,13 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
 
+
         int test = StartMenu.firstDisplay();
+        Car[] cars = new Car[test];
         for (int i = 0; i < test; i++) {
             Car car = StartMenu.secondDisplay();
-            System.out.println(car.toString());
+            cars[i] = car;
+            System.out.println(cars[i].toString());
         }
 
 
@@ -33,17 +37,23 @@ public class Main extends Application {
         primaryStage.show();
 
         //Set up track and its objects
+
         RaceTrack track = new RaceTrack();
         CheckPoint cp1 = new CheckPoint( 100, 100, "A");
         CheckPoint cp2 = new CheckPoint( 500, 100, "B");
         CheckPoint cp3 = new CheckPoint( 500, 500, "C");
         CheckPoint cp4 = new CheckPoint( 100, 500, "D");
         track.addCheckPoints(cp1, cp2, cp3, cp4);
+
+        track.placeCarsOnTrack(cars);
+
+        /*
         Car one = new Car(1, cp1.getCenterX(), cp1.getCenterY(), 20, Color.RED, "Red");   //Looking left
         Car two = new Car(2, cp2.getCenterX(), cp2.getCenterY(), 2, Color.GREEN, "Green");   //Looking down
         Car three = new Car(3, cp3.getCenterX(), cp3.getCenterY(), 5, Color.BLACK, "Black");   //Looking right
         Car four = new Car(4, cp4.getCenterX(), cp4.getCenterY(), 4, Color.BROWN, "Brown");   //Looking up
         track.placeCarsOnTrack(one, two, three, four);
+         */
 
         //Add checkpoints
         list[0].addAll(cp1, cp2, cp3, cp4);
@@ -52,7 +62,10 @@ public class Main extends Application {
         track.setLines(list[0]);
 
         //Add cars
-        list[0].addAll(one, two, three, four);
+        for (int i = 0; i < cars.length; i++) {
+            list[0].add(cars[i]);
+            System.out.println(cars[i].toString());
+        }
 
         //Get slowest and calculate number of "moves" needed to complete track for slowest car
         int slowest = track.getSlowestSpeed();

@@ -51,19 +51,23 @@ public class RaceTrack {
 
     //Sets up the cars routes(In order of how they are going to pass them A, B, C, D or D, A, B, C etc.)
     private void setUpRoutes(Car car, int index){
+        car.setOrientation(index + 1);
         ArrayList<CheckPoint> path = new ArrayList<CheckPoint>(); //List to add checkpoints
-        while(index != 4){                      //Add all in order
+        while(index != 4) {                      //Add all in order
             path.add(checkPoints.get(index));
             index++;
         }
-        if(path.size() != 4){                   //If got to last start with the first until getting all 4
+        if(path.size() != 4) {                   //If got to last start with the first until getting all 4
             index = 0;
-            while(path.size() != 4){
+            while(path.size() != 4) {
                 path.add(checkPoints.get(index));
                 index++;
             }
         }
         car.setRoute(path);
+
+        car.setCenterX(path.get(0).getCenterX());
+        car.setCenterY(path.get(0).getCenterY());
         //Set up route for car
     }
 

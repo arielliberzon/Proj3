@@ -72,6 +72,8 @@ public class Car extends Circle {
         this.tireRating = tireRating;
         this.transmission = transmission;
         this.color = color;
+        speed = 2;
+        setRadius(5);
     }
 
     //Update last checkpoint passed
@@ -99,10 +101,13 @@ public class Car extends Circle {
     public String toString() {
         return "Car{" +
                 "name=" + model +
-                "color=" + color +
+                ", color=" + color +
                 ", transmission=" + transmission +
                 ", engineHP=" + engineHP +
                 ", tireRating=" + tireRating +
+                ", orientation=" + orientation +
+                ", x=" + getCenterX() +
+                ", y=" + getCenterY() +
                 '}';
     }
 

@@ -7,7 +7,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 
-public class Car extends Circle {
+public class Car extends Circle implements Comparable<Car> {
 
     private int place;
 
@@ -52,6 +52,8 @@ public class Car extends Circle {
     //Keeps track of length traveled
     private int odometer;
 
+    private String carStats;
+
     //Constructor
     public Car(int orientation, double x, double y, int speed, Color color, String brand) {
         this.orientation = orientation;
@@ -92,6 +94,12 @@ public class Car extends Circle {
         long timeElapsed = Duration.between(start, finish).toMillis();
         time = (int) (timeElapsed / 1000);
         return time;
+    }
+
+    @Override
+    public int compareTo(Car other){
+
+        return other.endTime() - this.endTime();
     }
 
     //toString to debug
@@ -160,6 +168,16 @@ public class Car extends Circle {
         this.odometer = odometer;
     }
 
+    public void setCarStats(String stats){
+
+        carStats = stats;
+    }
+
+    public String getCarStats(){
+
+        return carStats;
+    }
+
 
     //Getters and setters not used
 
@@ -190,7 +208,6 @@ public class Car extends Circle {
     /*public int getTorque() {
         return torque;
     }
-
     public void setTorque(int torque) {
         this.torque = torque;
     }*/

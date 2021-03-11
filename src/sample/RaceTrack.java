@@ -5,6 +5,7 @@ import javafx.scene.shape.Line;
 
 import java.util.ArrayList;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class RaceTrack {
 
@@ -38,7 +39,7 @@ public class RaceTrack {
         cars.add(c4);
         cars.forEach(car -> car.startTime());
     }
-    
+
     public void placeCarsOnTrack(Car[] carArr) {
         for (int i = 0; i < carArr.length; i++) {
             setUpRoutes(carArr[i], i);
@@ -47,7 +48,7 @@ public class RaceTrack {
         cars.forEach(car -> car.startTime());
     }
 
-    
+
 
     //Sets up the cars routes(In order of how they are going to pass them A, B, C, D or D, A, B, C etc.)
     private void setUpRoutes(Car car, int index){
@@ -182,6 +183,49 @@ public class RaceTrack {
         list.add(line);
     }
 
+    public void resultsDisplay(){
+
+        Collections.sort(cars);
+
+        for(int i = 0; i < cars.size(); i++) {
+            if((i < cars.size() - 1) && (cars.get(i).endTime() < cars.get(i + 1).endTime())){
+                cars.get(i).setPlace(i + 1);
+            }
+            else if((i < cars.size() - 1) && (cars.get(i).endTime() == cars.get(i + 1).endTime())){
+                cars.get(i).setPlace(i + 1);
+                cars.get(i + 1).setPlace(i + 1);
+            }
+            else if(i == cars.size() - 1){
+                cars.get(i).setPlace(i + 1);
+            }
+        }
+
+        for(int i = 0; i < cars.size(); i++){
+
+            if(cars.get(i).getPlace() == 1) {
+
+                cars.get(i).setCarStats(cars.get(i).toString() + " finished 1st with a time of "
+                        + cars.get(0).endTime() + " seconds");
+            }
+            if(cars.get(i).getPlace() == 2) {
+
+                cars.get(i).setCarStats(cars.get(i).toString() + " finished 2nd with a time of "
+                        + cars.get(0).endTime() + " seconds");
+            }
+            if(cars.get(i).getPlace() == 3) {
+
+                cars.get(i).setCarStats(cars.get(i).toString() + " finished 3rd with a time of "
+                        + cars.get(0).endTime() + " seconds");
+            }
+            if(cars.get(i).getPlace() == 4) {
+
+                cars.get(i).setCarStats(cars.get(i).toString() + " finished 4th with a time of "
+                        + cars.get(0).endTime() + " seconds");
+            }
+        }
+        
+    }
+
     //Get length of track
     public int getLength() {
         return length;
@@ -220,4 +264,3 @@ public class RaceTrack {
         this.name = name;
     }
 }
-

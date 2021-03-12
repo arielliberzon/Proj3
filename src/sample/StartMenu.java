@@ -113,13 +113,11 @@ public class StartMenu {
     }
 
     private static Car createCar(String model, String[] data) {
-        Engine engine = new Engine(data[0]);
-        Tires tires = new Tires(data[1]);
-        Transmission transmission = new Transmission(data[2]);
-        Color color = getColor(data[3]);
-
-        Car car = new Car(playerCount, model, engine, tires, transmission, color);
-
+            Engine engine = new Engine(data[0]);
+            Tires tires = new Tires(data[1]);
+            Transmission transmission = new Transmission(data[2]);
+            Color color = getColor(data[3]);
+            Car car = new Car(playerCount, model, engine, tires, transmission, color);
         return car;
     }
 

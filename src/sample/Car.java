@@ -2,12 +2,13 @@ package sample;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 
-public class Car extends Circle implements Comparable<Car> {
+public class Car extends Rectangle implements Comparable<Car> {
 
     private int place;
 
@@ -57,13 +58,13 @@ public class Car extends Circle implements Comparable<Car> {
     //Constructor
     public Car(int orientation, double x, double y, int speed, Color color, String brand) {
         this.orientation = orientation;
-        setCenterX(x);
-        setCenterY(y);
-        setRadius(5);
+        setX(x);
+        setY(y);
         setFill(Color.LIGHTBLUE);
         this.speed = speed;
         setFill(color);
         this.brand = brand;
+        setSizes();
     }
 
     public Car(int carNum, String model, Engine engineHP, Tires tireRating,
@@ -75,7 +76,23 @@ public class Car extends Circle implements Comparable<Car> {
         this.transmission = transmission;
         this.color = color;
         speed = 2;
-        setRadius(5);
+    }
+
+    public void setSizes(){
+        if(orientation == 1 || orientation == 3){
+            setWidth(20);
+            setHeight(10);
+        }
+        else {
+            setWidth(10);
+            setHeight(20);
+        }
+    }
+
+    public void rotate(){
+        double saved = getWidth();
+        setWidth(getHeight());
+        setHeight(saved);
     }
 
     //Update last checkpoint passed
@@ -114,8 +131,8 @@ public class Car extends Circle implements Comparable<Car> {
                 ", engineHP=" + engineHP +
                 ", tireRating=" + tireRating +
                 ", orientation=" + orientation +
-                ", x=" + getCenterX() +
-                ", y=" + getCenterY() +
+                ", x=" + getX() +
+                ", y=" + getY() +
                 '}';
     }
 

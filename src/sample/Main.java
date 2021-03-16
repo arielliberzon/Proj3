@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -47,14 +48,6 @@ public class Main extends Application {
 
         track.placeCarsOnTrack(cars);
 
-        /*
-        Car one = new Car(1, cp1.getCenterX(), cp1.getCenterY(), 2, Color.RED, "Red");   //Looking left
-        Car two = new Car(2, cp2.getCenterX(), cp2.getCenterY(), 7, Color.GREEN, "Green");   //Looking down
-        Car three = new Car(3, cp3.getCenterX(), cp3.getCenterY(), 4, Color.BLACK, "Black");   //Looking right
-        Car four = new Car(4, cp4.getCenterX(), cp4.getCenterY(), 8, Color.BROWN, "Brown");   //Looking up
-        track.placeCarsOnTrack(one, two, three, four);
-         */
-
         //Add lines in between points
         track.setLines(list[0]);
 
@@ -70,6 +63,21 @@ public class Main extends Application {
         //Get slowest and calculate number of "moves" needed to complete track for slowest car
         int slowest = track.getSlowestSpeed();
         int moves = track.getLength()/slowest;
+
+        Button startOverButton = new Button("Start Over");          //Star over button
+        startOverButton.setLayoutX(400);
+        startOverButton.setLayoutY(610);
+
+        //If start over is pressed the whole program is restarted
+        startOverButton.setOnAction(e -> {
+            try {
+                start(primaryStage);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
+
+        list[0].add(startOverButton);
 
         //Move cars ever 50 milli seconds
         Timeline move = new Timeline(new KeyFrame(Duration.millis(50),

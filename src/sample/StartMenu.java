@@ -107,6 +107,10 @@ public class StartMenu {
         stage.setScene(scene);
         stage.showAndWait();
 
+        for (int i = 0; i < options.length; i++) {
+            //if (options[i] == null)
+
+        }
         car = createCar(model, options);
         playerCount++;
         return car;

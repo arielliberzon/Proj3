@@ -3,6 +3,8 @@ package sample;
 import javafx.collections.ObservableList;
 import javafx.scene.shape.Line;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+
 import java.util.ArrayList;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +27,8 @@ public class RaceTrack {
     public RaceTrack() {
         length = 1200;
     }
+
+    private int height = 700;
 
     //Puts the cars in track and calls to set up their routes
     public void placeCarsOnTrack(Car c1, Car c2, Car c3, Car c4){
@@ -90,7 +94,7 @@ public class RaceTrack {
         }
         cars.forEach(car -> list.remove(car));                              //Deleting old car positions in GUI
         for (int i = 0; i < cars.size(); i++) {
-            move(cars.get(i));                                              //Move car
+            move(cars.get(i), list);                                              //Move car
             list.add(cars.get(i));                                          //Add car to visible list
         }
         return list;                                                        //Return updated list
@@ -124,7 +128,7 @@ public class RaceTrack {
 
 
     //Moves car depending on orientation
-    public boolean move(Car car){
+    public boolean move(Car car, ObservableList list){
         CheckPoint nextCP = car.getRoute().get(car.getCurrentCP()+1);
         int nextXPos = (int)nextCP.getCenterX();                          //x position of next checkpoint
         int nextYPos = (int)nextCP.getCenterY();                          //y position of next checkpoint
@@ -195,7 +199,7 @@ public class RaceTrack {
             else
                 car.setY(curCarY - speed);
         }
-        checkForFinish(car);
+        checkForFinish(car, list);
         return true;
     }
 
@@ -206,10 +210,14 @@ public class RaceTrack {
         return true;
     }
     //Check if car finished. If odometer >=  length turn car off
-    private boolean checkForFinish(Car car) {
+    private boolean checkForFinish(Car car, ObservableList list) {
         if(car.getOdometer() >= length) {
             car.setActive(false);
             car.endTime();
+            Text result = new Text(50, height, "Car:" +car.toString()+
+                    " Just finished with a time of:"+car.getTime().toString());
+            height += 20;
+            list.add(result);
             System.out.println(car.toString()+" Just finished with a time of: "+car.getTime() +" seconds");
             return true;
         }

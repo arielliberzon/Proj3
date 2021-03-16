@@ -215,7 +215,7 @@ public class RaceTrack {
             car.setActive(false);
             car.endTime();
             Text result = new Text(50, height, "Car:" +car.toString()+
-                    " Just finished with a time of:"+car.getTime().toString());
+                    " Just finished with a time of:"+car.getTime());
             height += 20;
             list.add(result);
             System.out.println(car.toString()+" Just finished with a time of: "+car.getTime() +" seconds");

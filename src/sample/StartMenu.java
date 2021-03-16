@@ -57,6 +57,7 @@ public class StartMenu {
         String model = "Car #" + playerCount;
 
         String[] options = new String[4];
+        String[] defOpts = new String[] {"Engine 1", "Tire 1", "Transmission 1", "Blue"};
 
         String[] engineTypes = new String[] {"Engine 1", "Engine 2", "Engine 3", "Engine 4"};
         String[] tireTypes = new String[] {"Tire 1", "Tire 2", "Tire 3", "Tire 4"};
@@ -108,10 +109,11 @@ public class StartMenu {
         stage.showAndWait();
 
         for (int i = 0; i < options.length; i++) {
-            //if (options[i] == null)
-
+            if (options[i] == null)
+                car = createCar(model, defOpts);
+            if (options[options.length -1] != null)
+                car = createCar(model, options);
         }
-        car = createCar(model, options);
         playerCount++;
         return car;
     }

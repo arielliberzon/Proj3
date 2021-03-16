@@ -1,7 +1,6 @@
 package sample;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 import java.time.Duration;
@@ -20,11 +19,7 @@ public class Car extends Rectangle implements Comparable<Car> {
     private Engine engineHP;
     //private int torque;
     private Tires tireRating;
-    private int weight;
-    private int handlingRating;
-    private String model;
-    private String year;
-    private String brand;
+    private String name;
 
     //Holds initial time
     private Instant start;
@@ -33,7 +28,7 @@ public class Car extends Rectangle implements Comparable<Car> {
     private Instant finish;
 
     //Hold race time
-    private int time;
+    private double time;
 
     //Depending on number keep track of orientation (change to string maybe)
     private int orientation;
@@ -56,21 +51,20 @@ public class Car extends Rectangle implements Comparable<Car> {
     private String carStats;
 
     //Constructor
-    public Car(int orientation, double x, double y, int speed, Color color, String brand) {
+    public Car(int orientation, double x, double y, int speed, Color color) {
         this.orientation = orientation;
         setX(x);
         setY(y);
         setFill(Color.LIGHTBLUE);
         this.speed = speed;
         setFill(color);
-        this.brand = brand;
         setSizes();
     }
 
-    public Car(int carNum, String model, Engine engineHP, Tires tireRating,
+    public Car(int carNum, String name, Engine engineHP, Tires tireRating,
                Transmission transmission, Color color) {
         this.carNum = carNum;
-        this.model = model;
+        this.name = name;
         this.engineHP = engineHP;
         this.tireRating = tireRating;
         this.transmission = transmission;
@@ -106,17 +100,17 @@ public class Car extends Rectangle implements Comparable<Car> {
     }
 
     //Calculates time taken
-    public int endTime(){
+    public double endTime(){
         finish = Instant.now();
         long timeElapsed = Duration.between(start, finish).toMillis();
-        time = (int) (timeElapsed / 1000);
+        time = (double) (timeElapsed / 1000);
         return time;
     }
 
     @Override
     public int compareTo(Car other){
 
-        return other.endTime() - this.endTime();
+        return (int) (other.getTime() * 1000 - this.getTime() * 1000);
     }
 
     //toString to debug
@@ -124,16 +118,7 @@ public class Car extends Rectangle implements Comparable<Car> {
 
     @Override
     public String toString() {
-        return "Car{" +
-                "name=" + model +
-                ", color=" + color +
-                ", transmission=" + transmission +
-                ", engineHP=" + engineHP +
-                ", tireRating=" + tireRating +
-                ", orientation=" + orientation +
-                ", x=" + getX() +
-                ", y=" + getY() +
-                '}';
+        return name;
     }
 
     //Used so far getters and setters
@@ -149,7 +134,7 @@ public class Car extends Rectangle implements Comparable<Car> {
         return route;
     }
 
-    public int getTime() {
+    public double getTime() {
         return time;
     }
 
@@ -237,44 +222,12 @@ public class Car extends Rectangle implements Comparable<Car> {
         this.tireRating = tireRating;
     }
 
-    public int getWeight() {
-        return weight;
+    public String getName() {
+        return name;
     }
 
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
-
-    public int getHandlingRating() {
-        return handlingRating;
-    }
-
-    public void setHandlingRating(int handlingRating) {
-        this.handlingRating = handlingRating;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Instant getStart() {

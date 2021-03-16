@@ -250,10 +250,10 @@ public class RaceTrack {
         Collections.sort(cars);
 
         for(int i = 0; i < cars.size(); i++) {
-            if((i < cars.size() - 1) && (cars.get(i).endTime() < cars.get(i + 1).endTime())){
+            if((i < cars.size() - 1) && (cars.get(i).getTime() < cars.get(i + 1).getTime())){
                 cars.get(i).setPlace(i + 1);
             }
-            else if((i < cars.size() - 1) && (cars.get(i).endTime() == cars.get(i + 1).endTime())){
+            else if((i < cars.size() - 1) && (cars.get(i).getTime() == cars.get(i + 1).getTime())){
                 cars.get(i).setPlace(i + 1);
                 cars.get(i + 1).setPlace(i + 1);
             }
@@ -267,22 +267,22 @@ public class RaceTrack {
             if(cars.get(i).getPlace() == 1) {
 
                 cars.get(i).setCarStats(cars.get(i).toString() + " finished 1st with a time of "
-                        + cars.get(0).endTime() + " seconds");
+                        + cars.get(0).getTime() + " seconds");
             }
             if(cars.get(i).getPlace() == 2) {
 
                 cars.get(i).setCarStats(cars.get(i).toString() + " finished 2nd with a time of "
-                        + cars.get(0).endTime() + " seconds");
+                        + cars.get(0).getTime() + " seconds");
             }
             if(cars.get(i).getPlace() == 3) {
 
                 cars.get(i).setCarStats(cars.get(i).toString() + " finished 3rd with a time of "
-                        + cars.get(0).endTime() + " seconds");
+                        + cars.get(0).getTime() + " seconds");
             }
             if(cars.get(i).getPlace() == 4) {
 
                 cars.get(i).setCarStats(cars.get(i).toString() + " finished 4th with a time of "
-                        + cars.get(0).endTime() + " seconds");
+                        + cars.get(0).getTime() + " seconds");
             }
         }
         

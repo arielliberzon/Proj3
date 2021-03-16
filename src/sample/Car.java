@@ -67,6 +67,7 @@ public class Car extends Rectangle implements Comparable<Car> {
         setSizes();
     }
 
+
     public Car(int carNum, String model, Engine engineHP, Tires tireRating,
                Transmission transmission, Color color) {
         this.carNum = carNum;
@@ -75,10 +76,11 @@ public class Car extends Rectangle implements Comparable<Car> {
         this.tireRating = tireRating;
         this.transmission = transmission;
         this.color = color;
+        setFill(color);
         speed = 2;
     }
 
-    public void setSizes(){
+    public void setSizes() {
         if(orientation == 1 || orientation == 3){
             setWidth(20);
             setHeight(10);
@@ -89,7 +91,7 @@ public class Car extends Rectangle implements Comparable<Car> {
         }
     }
 
-    public void rotate(){
+    public void rotate() {
         double saved = getWidth();
         setWidth(getHeight());
         setHeight(saved);

@@ -149,7 +149,7 @@ public class Car extends Rectangle implements Comparable<Car> {
         return route;
     }
 
-    public int getTime() {
+    public Integer getTime() {
         return time;
     }
 

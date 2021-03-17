@@ -28,7 +28,7 @@ public class RaceTrack {
         length = 1200;
     }
 
-    private int height = 700;
+    private int height = 100;
 
     //Puts the cars in track and calls to set up their routes
     public void placeCarsOnTrack(Car c1, Car c2, Car c3, Car c4){
@@ -183,7 +183,7 @@ public class RaceTrack {
             }
             else
                 car.setX(curCarX - speed);
-        }//
+        }
         else if (orientation == 4) {                        //Traveling up
             if(curCarY - speed <= nextYPos){             //If moving will exceed checkpoint turn
                 dif = nextYPos - curCarY;               //Find distance it will exceed
@@ -214,9 +214,9 @@ public class RaceTrack {
         if(car.getOdometer() >= length) {
             car.setActive(false);
             car.endTime();
-            Text result = new Text(50, height, "Car:" +car.toString()+
-                    " Just finished with a time of:"+car.getTime());
-            height += 20;
+            Text result = new Text(550, height, "Car:" +car.toString()+
+                    " \nJust finished with a time of:"+car.getTime());
+            height += 50;
             list.add(result);
             System.out.println(car.toString()+" Just finished with a time of: "+car.getTime() +" seconds");
             return true;

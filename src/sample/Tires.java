@@ -1,6 +1,7 @@
 package sample;
 
 public class Tires {
+    // DELETE THIS LINE
 
     private String tireType;
     private int speed;

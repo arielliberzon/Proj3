@@ -2,6 +2,7 @@ package sample;
 
 public class Engine {
 
+    // DELETE THIS LINE
     private String engineType;
     private int speed;
 

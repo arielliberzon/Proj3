@@ -1,6 +1,7 @@
 package sample;
 
 public class Transmission {
+    // DELETE THIS LINE
 
     private String tType;
     private int speed;

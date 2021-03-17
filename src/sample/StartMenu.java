@@ -14,6 +14,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class StartMenu {
+    // DELETE THIS LINE
 
     private static int numCars = 1;
 

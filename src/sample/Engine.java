@@ -1,8 +1,10 @@
 package sample;
 
 
+import java.util.Objects;
+
 /**
- * class for the Engine object that effects the speed of the Car
+ * class for the Engine object that affects the speed of the Car
  */
 public class Engine {
 
@@ -72,5 +74,18 @@ public class Engine {
     @Override
     public String toString() {
         return engineType;
+    }
+
+    /**
+     * Overriding equals: Checks whether o == this
+     * param o the object to test for equality
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Engine)) return false;
+        Engine that = (Engine) o;
+        return speed == that.speed &&
+                Objects.equals(engineType, that.engineType);
     }
 }

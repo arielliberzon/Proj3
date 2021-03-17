@@ -1,5 +1,7 @@
 package sample;
 
+import java.util.Objects;
+
 /**
  * class for the Tire object that affects the speed of the Car
  */
@@ -70,5 +72,18 @@ public class Tires {
     @Override
     public String toString() {
         return tireType;
+    }
+
+    /**
+     * Overriding equals: Checks whether o == this
+     * param o the object to test for equality
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Tires)) return false;
+        Tires that = (Tires) o;
+        return speed == that.speed &&
+                Objects.equals(tireType, that.tireType);
     }
 }

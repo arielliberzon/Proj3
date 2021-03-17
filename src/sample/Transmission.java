@@ -1,7 +1,9 @@
 package sample;
 
+import java.util.Objects;
+
 /**
- * class for the Transmission object that effects the speed of the Car
+ * class for the Transmission object that affects the speed of the Car
  */
 public class Transmission {
 
@@ -70,5 +72,18 @@ public class Transmission {
     @Override
     public String toString() {
         return tType;
+    }
+
+    /**
+     * Overriding equals: Checks whether o == this
+     * param o the object to test for equality
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Transmission)) return false;
+        Transmission that = (Transmission) o;
+        return speed == that.speed &&
+                Objects.equals(tType, that.tType);
     }
 }

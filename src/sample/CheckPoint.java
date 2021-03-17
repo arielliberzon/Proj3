@@ -108,7 +108,7 @@ public class CheckPoint extends Circle {
     }
 
     /**
-     * Overriding equal: Checks whether o == this
+     * Overriding equals: Checks whether o == this
      * param o the object to test for equality
      */
     @Override

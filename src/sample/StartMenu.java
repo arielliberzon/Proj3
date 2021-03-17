@@ -56,7 +56,7 @@ public class StartMenu {
 
     public Car secondDisplay() {
 
-        String model = "Car #" + playerCount;
+        String name = "Car #" + playerCount;
 
         String[] options = new String[4];
         String[] defOpts = new String[] {"Rotary Engine", "All-Season", "Automatic Transmission", "Blue"};
@@ -112,20 +112,20 @@ public class StartMenu {
 
         for (int i = 0; i < options.length; i++) {
             if (options[i] == null)
-                car = createCar(model, defOpts);
+                car = createCar(name, defOpts);
             if (options[options.length -1] != null)
-                car = createCar(model, options);
+                car = createCar(name, options);
         }
         playerCount++;
         return car;
     }
 
-    private Car createCar(String model, String[] data) {
+    private Car createCar(String name, String[] data) {
             Engine engine = new Engine(data[0]);
             Tires tires = new Tires(data[1]);
             Transmission transmission = new Transmission(data[2]);
             Color color = getColor(data[3]);
-            Car car = new Car(playerCount, model, engine, tires, transmission, color);
+            Car car = new Car(playerCount, name, engine, tires, transmission, color);
         return car;
     }
 

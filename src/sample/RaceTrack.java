@@ -20,7 +20,7 @@ public class RaceTrack {
     //Still unused attributes
     private String name;
 
-    private int carCount;
+    private int placeCount;
 
     private Car prevCar;
 
@@ -31,7 +31,7 @@ public class RaceTrack {
     //Default constructor, default length of track.
     public RaceTrack() {
         length = 1200;
-        carCount = 0;
+        placeCount = 0;
         prevCar = new Car();
     }
 
@@ -196,17 +196,17 @@ public class RaceTrack {
     //Check if car finished. If odometer >=  length turn car off
     private boolean checkForFinish(Car car, ObservableList list) {
         if(car.getOdometer() >= length) {
-            System.out.println(carCount);
+            System.out.println(car.toString());
             car.setActive(false);
             car.endTime();
             //resultsDisplay();
 
             if (car.getTime() != prevCar.getTime()) {
-                carCount++;
+                placeCount++;
             }
-            //System.out.println(carCount);
+            //System.out.println(placeCount);
 
-            car.setCarStats(carCount);
+            car.setCarStats(placeCount);
 
             Text result = new Text(550, height, car.getCarStats());
 
@@ -243,49 +243,6 @@ public class RaceTrack {
         line.setEndY(end.getCenterY());
         list.add(line);
     }
-
-    /*public void resultsDisplay(){
-
-        Collections.sort(cars);
-
-        for(int i = 0; i < cars.size(); i++) {
-            if((i < cars.size() - 1) && (cars.get(i).getTime() < cars.get(i + 1).getTime())){
-                cars.get(i).setPlace(i + 1);
-            }
-            else if((i < cars.size() - 1) && (cars.get(i).getTime() == cars.get(i + 1).getTime())){
-                cars.get(i).setPlace(i + 1);
-                cars.get(i + 1).setPlace(i + 1);
-            }
-            else if(i == cars.size() - 1){
-                cars.get(i).setPlace(i + 1);
-            }
-        }
-
-        for(int i = 0; i < cars.size(); i++){
-
-            if(cars.get(i).getPlace() == 1) {
-
-                cars.get(i).setCarStats(cars.get(i).toString() + " finished 1st with a time of "
-                        + cars.get(0).getTime() + " seconds");
-            }
-            if(cars.get(i).getPlace() == 2) {
-
-                cars.get(i).setCarStats(cars.get(i).toString() + " finished 2nd with a time of "
-                        + cars.get(0).getTime() + " seconds");
-            }
-            if(cars.get(i).getPlace() == 3) {
-
-                cars.get(i).setCarStats(cars.get(i).toString() + " finished 3rd with a time of "
-                        + cars.get(0).getTime() + " seconds");
-            }
-            if(cars.get(i).getPlace() == 4) {
-
-                cars.get(i).setCarStats(cars.get(i).toString() + " finished 4th with a time of "
-                        + cars.get(0).getTime() + " seconds");
-            }
-        }
-        
-    }*/
 
     //Get length of track
     public int getLength() {

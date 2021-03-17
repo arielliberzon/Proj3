@@ -69,7 +69,8 @@ public class Car extends Rectangle implements Comparable<Car> {
         this.tireRating = tireRating;
         this.transmission = transmission;
         this.color = color;
-        speed = 2;
+        setFill(color);
+        speed = 10;
     }
 
     public void setSizes(){

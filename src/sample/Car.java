@@ -1,22 +1,24 @@
+/**
+ * This Car class reflects the players choices when they start the game. Every car has an
+ * engine, tires, transmission, and color that the user can chose (up to 4 options for
+ * each). Car is based on a rectangle and its orientation reflects its appearance on the
+ * track. Every car also has a set of X and Y coordinates that determine its place on the
+ * track.
+ */
 package sample;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 
-public class Car extends Rectangle implements Comparable<Car> {
-    private int place;
+public class Car extends Rectangle {
 
     private int carNum;
-
     private Color color;
-    //Attributes not used yet
     private Transmission transmission;
     private Engine engine;
-    //private int torque;
     private Tires tires;
     private String name;
 
@@ -49,6 +51,12 @@ public class Car extends Rectangle implements Comparable<Car> {
 
     private String carStats;
 
+    private int place;
+
+    /**
+     * Default Constructor
+     * used in race track
+     */
     public Car() {
         carNum = 0;
         name = "No Name";
@@ -56,11 +64,20 @@ public class Car extends Rectangle implements Comparable<Car> {
         tires = new Tires();
         transmission = new Transmission();
         color = Color.BLACK;
+        setFill(color);
         speed = 1;
         time = 0.0;
-        odometer = 1200;
     }
 
+    /**
+     * Constructor used to create cars in the StartMenu class
+     * @param carNum Player number (1-4)
+     * @param name StartMenu sets this as "Car #(carNum)"
+     * @param engine
+     * @param tires
+     * @param transmission
+     * @param color
+     */
     public Car(int carNum, String name, Engine engine, Tires tires,
                Transmission transmission, Color color) {
         this.carNum = carNum;
@@ -73,6 +90,9 @@ public class Car extends Rectangle implements Comparable<Car> {
         setSpeed();
     }
 
+    /**
+     * Set the size of the car based on the orientation
+     */
     public void setSizes(){
         if(orientation == 1 || orientation == 3){
             setWidth(20);
@@ -95,11 +115,6 @@ public class Car extends Rectangle implements Comparable<Car> {
         currentCP++;
     }
 
-    //Will calculate speed
-    public void calculateSpeed(){
-        speed = 1;
-    }
-
     //Calculates time taken
     public double endTime(){
         finish = Instant.now();
@@ -107,15 +122,6 @@ public class Car extends Rectangle implements Comparable<Car> {
         time = (double) (timeElapsed / 1000);
         return time;
     }
-
-    @Override
-    public int compareTo(Car other){
-
-        return (int) (other.getTime() * 1000 - this.getTime() * 1000);
-    }
-
-    //toString to debug
-
 
     @Override
     public String toString() {
@@ -171,6 +177,10 @@ public class Car extends Rectangle implements Comparable<Car> {
         this.odometer = odometer;
     }
 
+    /**
+     * Sets the carStats String based on the car's placement in the race
+     * @param place value passed by the RaceTrack class
+     */
     public void setCarStats(int place){
         if (place == 1)
             carStats = name + " finished 1st with a time of " + time + " seconds.";
@@ -207,19 +217,19 @@ public class Car extends Rectangle implements Comparable<Car> {
         this.transmission = transmission;
     }
 
-    public Engine getengine() {
+    public Engine getEngine() {
         return engine;
     }
 
-    public void setengine(Engine engine) {
+    public void setEngine(Engine engine) {
         this.engine = engine;
     }
 
-    public Tires gettires() {
+    public Tires getTires() {
         return tires;
     }
 
-    public void settires(Tires tires) {
+    public void setTires(Tires tires) {
         this.tires = tires;
     }
 
@@ -247,6 +257,10 @@ public class Car extends Rectangle implements Comparable<Car> {
         this.finish = finish;
     }
 
+    /**
+     * Adds up the speed value for all of the car's relevant components
+     * sets that value as the car's speed
+     */
     private void setSpeed() {
         speed = engine.getSpeed() + tires.getSpeed() + transmission.getSpeed();
     }

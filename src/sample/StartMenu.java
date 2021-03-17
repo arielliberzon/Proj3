@@ -28,7 +28,6 @@ public class StartMenu {
     private int numCars;
     private int playerCount;
     private Car car;
-    private String[] options = new String[4];
 
     /**
      * Final values that are used in the display methods
@@ -90,6 +89,7 @@ public class StartMenu {
      * @return A car object that will added to the race
      */
     public Car carDisplay() {
+        String[] options = new String[4];
 
         String name = "Car #" + playerCount;
 

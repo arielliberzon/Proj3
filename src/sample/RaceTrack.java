@@ -87,7 +87,6 @@ public class RaceTrack {
             }
         }
         car.setRoute(path);
-
         car.setX(path.get(0).getCenterX());
         car.setY(path.get(0).getCenterY());
         //Set up route for car
@@ -102,12 +101,160 @@ public class RaceTrack {
         }
         cars.forEach(car -> list.remove(car));                              //Deleting old car positions in GUI
         for (int i = 0; i < cars.size(); i++) {
-            move(cars.get(i), list);                                              //Move car
+            moveCar(cars.get(i), list);                                              //Move car
             list.add(cars.get(i));                                          //Add car to visible list
         }
         return list;                                                        //Return updated list
     }
 
+    public void moveRight(Car car, int howMuch, ObservableList list){
+        CheckPoint nextCP = car.getRoute().get(car.getCurrentCP() + 1);
+        int nextXPos = (int) nextCP.getCenterX();                          //x position of next checkpoint
+        int curCarX = (int)car.getX();
+        //Case 1: Car will not exceed next checkpoint when moving
+        if(curCarX+howMuch <= nextXPos) {
+            car.setX(curCarX + howMuch);
+            car.setOdometer(car.getOdometer()+howMuch);
+        }
+
+        //Case 2: Car will exceed next checkpoint when moving but will not complete race
+        else if(curCarX+howMuch > nextXPos && car.getOdometer()+howMuch <= length){
+            int dif = nextXPos - curCarX;
+            int remainder = howMuch - dif;
+            car.setX(curCarX + dif);
+            car.incrementCP();
+            car.setOrientation(2);
+            car.rotate();
+            car.setOdometer(car.getOdometer()+dif);
+            moveDown(car, remainder, list);
+        }
+
+        //Case 3: Car will be arriving to last checkpoint
+        else if(curCarX+howMuch > nextXPos  && car.getOdometer()+howMuch > length){
+            int dif = nextXPos - curCarX;
+            car.setX(curCarX + dif);
+            car.setOdometer(car.getOdometer()+dif);
+            //checkForFinish(car, list);                         //Turn off car and display results
+        }
+
+    }
+
+    public void moveDown(Car car, int howMuch, ObservableList list){
+        CheckPoint nextCP = car.getRoute().get(car.getCurrentCP() + 1);
+        int nextYPos = (int) nextCP.getCenterY();                          //x position of next checkpoint
+        int curCarY = (int)car.getY();
+
+        //Case 1: Car will not exceed next checkpoint when moving
+        if(curCarY+howMuch <= nextYPos) {
+            car.setY(curCarY + howMuch);
+            car.setOdometer(car.getOdometer()+howMuch);
+        }
+
+        //Case 2: Car will exceed next checkpoint when moving but will not complete race
+        else if(curCarY+howMuch > nextYPos && car.getOdometer()+howMuch <= length){
+            int dif = nextYPos - curCarY;
+            int remainder = howMuch - dif;
+            car.setY(curCarY + dif);
+            car.incrementCP();
+            car.rotate();
+            car.setOdometer(car.getOdometer()+dif);
+            car.setOrientation(3);
+            moveLeft(car, remainder, list);
+        }
+
+        //Case 3: Car will be arriving to last checkpoint
+        else if(curCarY+howMuch > nextYPos  && car.getOdometer()+howMuch > length){
+            int dif = nextYPos - curCarY;
+            car.setY(curCarY + dif);
+            car.setOdometer(car.getOdometer()+dif);
+            //checkForFinish(car, list);                         //Turn off car and display results
+        }
+    }
+
+    public void moveLeft(Car car, int howMuch, ObservableList list){
+        CheckPoint nextCP = car.getRoute().get(car.getCurrentCP() + 1);
+        int nextXPos = (int) nextCP.getCenterX();                          //x position of next checkpoint
+        int curCarX = (int)car.getX();
+
+        //Case 1: Car will not exceed next checkpoint when moving
+        if(curCarX+howMuch >= nextXPos) {
+            car.setX(curCarX - howMuch);
+            car.setOdometer(car.getOdometer()+howMuch);
+        }
+
+        //Case 2: Car will exceed next checkpoint when moving but will not complete race
+        else if(curCarX+howMuch < nextXPos && car.getOdometer()+howMuch <= length){
+            int dif = curCarX - nextXPos;
+            int remainder = howMuch - dif;
+            car.setX(curCarX - dif);
+            car.incrementCP();
+            car.rotate();
+            car.setOdometer(car.getOdometer()+dif);
+            car.setOrientation(4);
+            moveUp(car, remainder, list);
+        }
+
+        //Case 3: Car will be arriving to last checkpoint
+        else if(curCarX+howMuch < nextXPos  && car.getOdometer()+howMuch > length){
+            int dif = curCarX - nextXPos;
+            car.setX(curCarX - dif);
+            car.setOdometer(car.getOdometer()+dif);
+            //checkForFinish(car, list);                         //Turn off car and display results
+        }
+
+    }
+
+    public void moveUp(Car car, int howMuch, ObservableList list){
+        CheckPoint nextCP = car.getRoute().get(car.getCurrentCP() + 1);
+        int nextYPos = (int) nextCP.getCenterY();                          //x position of next checkpoint
+        int curCarY = (int)car.getY();
+
+        //Case 1: Car will not exceed next checkpoint when moving
+        if(curCarY+howMuch >= nextYPos) {
+            car.setY(curCarY - howMuch);
+            car.setOdometer(car.getOdometer()+howMuch);
+        }
+
+        //Case 2: Car will exceed next checkpoint when moving but will not complete race
+        else if(curCarY+howMuch < nextYPos && car.getOdometer()+howMuch <= length){
+            int dif = curCarY - nextYPos;
+            int remainder = howMuch - dif;
+            car.setY(curCarY - dif);
+            car.incrementCP();
+            car.rotate();
+            car.setOdometer(car.getOdometer()+dif);
+            car.setOrientation(1);
+            moveRight(car, remainder, list);
+        }
+
+        //Case 3: Car will be arriving to last checkpoint
+        else if(curCarY+howMuch > nextYPos  && car.getOdometer()+howMuch > length){
+            int dif = curCarY - nextYPos;
+            car.setY(curCarY - dif);
+            car.setOdometer(car.getOdometer()+dif);
+            //finish(car, list);                         //Turn off car and display results
+        }
+    }
+
+    public boolean moveCar(Car car, ObservableList list) {
+        if (car.isActive()) { //Only move if car is active
+            int speed = car.getSpeed();
+            int orientation = car.getOrientation();
+            if (orientation == 1) {                     //Call move right, if any remainder will return true
+                    moveRight(car, speed, list);
+            } else if (orientation == 2) {             //Call move right, if any remainder will return true
+                    moveDown(car, speed, list);
+            } else if (orientation == 3) {             //Call move right, if any remainder will return true
+                    moveLeft(car, speed, list);
+            } else if (orientation == 4) {             //Call move right, if any remainder will return true
+                    moveUp(car, speed, list);
+            }
+            checkForFinish(car, list);
+            return true; //Car moved
+        }
+        return false; //Car did not move
+    }
+/*
     public boolean move(Car car, ObservableList list){
         CheckPoint nextCP = car.getRoute().get(car.getCurrentCP()+1);
         int nextXPos = (int)nextCP.getCenterX();                          //x position of next checkpoint
@@ -118,21 +265,26 @@ public class RaceTrack {
         int curCarX = (int) car.getX();
         int curCarY = (int) car.getY();
         int speed = car.getSpeed();
-        car.setOdometer(car.getOdometer()+speed);
-        if (orientation == 1) {                         //Car pointing right
-            if(curCarX + speed >= nextXPos){             //If moving will exceed checkpoint turn
-                dif = nextXPos - curCarX;               //Find when will it exceed
-                remainder = speed - dif;                //Calculate remaining distance to travel
-                car.setX(curCarX + dif);          //Move car to x value checkpoint
-                if(checkNotFinishing(car)) {
-                    car.setY(curCarY + remainder);    //Move car the rest of distance
+        if (orientation == 1) {                             //Car pointing right
+            if(curCarX + speed >= nextXPos){                //If moving will exceed checkpoint
+                dif = nextXPos - curCarX;                   //Find when will it exceed
+                remainder = speed - dif;                    //Calculate remaining distance to travel
+                car.setX(curCarX + dif);                    //Move car to x value checkpoint
+                if(checkNotFinishing(car)) {                //If not last checkpoint
+                    car.setY(curCarY + remainder);          //Rotate and move rest of distance
                     car.rotate();
+                    car.setOdometer(car.getOdometer()+speed);   //Register move
+                }
+                else{                                       //If finishing race set
+                    car.setOdometer(car.getOdometer()+dif);
+                    checkForFinish(car, list);
                 }
                 car.setOrientation(2);                  //Set up new orientation
                 car.incrementCP();
             }
-            else {
+            else {                                          //Moving will not exceed next checkpoint
                 car.setX(curCarX + speed);
+                car.setOdometer(car.getOdometer()+speed);
             }
         }
         else if (orientation == 2) {                    //Car pointing down
@@ -143,12 +295,20 @@ public class RaceTrack {
                 if(checkNotFinishing(car)) {
                     car.setX(curCarX - remainder);
                     car.rotate();
+                    car.setOdometer(car.getOdometer()+speed);
+                }
+                else{
+                    car.setOdometer(car.getOdometer()+dif);
+                    checkForFinish(car, list);
+
                 }
                 car.setOrientation(3);
                 car.incrementCP();
             }
-            else
+            else {
                 car.setY(curCarY + speed);
+                car.setOdometer(car.getOdometer()+speed);
+            }
 
         }
         else if (orientation == 3) {                     //Driving left
@@ -160,12 +320,20 @@ public class RaceTrack {
                 if(checkNotFinishing(car)) {
                     car.setY(curCarY - remainder);    //Move car the rest of distance
                     car.rotate();
+                    car.setOdometer(car.getOdometer()+speed);
+                }
+                else{
+                    car.setOdometer(car.getOdometer()+dif);
+                    checkForFinish(car, list);
+
                 }
                 car.setOrientation(4);                  //Set up new orientation
                 car.incrementCP();
             }
-            else
+            else {
                 car.setX(curCarX - speed);
+                car.setOdometer(car.getOdometer()+speed);
+            }
         }
         else if (orientation == 4) {                        //Traveling up
             if(curCarY - speed <= nextYPos){             //If moving will exceed checkpoint turn
@@ -176,16 +344,26 @@ public class RaceTrack {
                 if(checkNotFinishing(car)){
                     car.setX(curCarX + remainder);
                     car.rotate();
+                    car.setOdometer(car.getOdometer()+speed);
+                }
+                else{
+                    car.setOdometer(car.getOdometer()+dif);
+                    checkForFinish(car, list);
                 }
                 car.setOrientation(1);
                 car.incrementCP();
             }
-            else
+            else {
                 car.setY(curCarY - speed);
+                car.setOdometer(car.getOdometer()+speed);
+            }
         }
-        checkForFinish(car, list);
+        boolean result = checkForFinish(car, list);
+        System.out.println("Check for finish returned "+result);
         return true;
     }
+
+ */
 
     private boolean checkNotFinishing(Car car){
         if(car.getCurrentCP()+1 == 3){
@@ -195,26 +373,19 @@ public class RaceTrack {
     }
     //Check if car finished. If odometer >=  length turn car off
     private boolean checkForFinish(Car car, ObservableList list) {
+        System.out.println("Check for finish is called");
         if(car.getOdometer() >= length) {
             System.out.println(car.toString());
             car.setActive(false);
             car.endTime();
-            //resultsDisplay();
-
             if (car.getTime() != prevCar.getTime()) {
                 placeCount++;
             }
-            //System.out.println(placeCount);
-
             car.setCarStats(placeCount);
-
             Text result = new Text(550, height, car.getCarStats());
-
             height += 50;
             list.add(result);
-
             prevCar = car;
-
             return true;
         }
         return false;

@@ -13,9 +13,6 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.awt.*;
-import java.util.concurrent.atomic.AtomicReference;
-
 public class StartMenu {
 
     private static int numCars = 1;

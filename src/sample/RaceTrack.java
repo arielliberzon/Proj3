@@ -21,14 +21,16 @@ public class RaceTrack {
     //Still unused attributes
     private String name;
 
+    private int carCount;
+
+    private Car prevCar;
+
     //Default constructor, default length of track.
     public RaceTrack() {
         length = 1200;
-        addCheckPoints();
+        carCount = 0;
+        prevCar = new Car();
     }
-
-    //Holds the number of "moves" for all cars to complete race
-    int moves;
 
     private int height = 100;
 
@@ -52,7 +54,6 @@ public class RaceTrack {
             cars.add(carArr[i]);
         }
         cars.forEach(car -> car.startTime());
-        getSlowestSpeed();
     }
 
     //Sets up the cars routes(In order of how they are going to pass them A, B, C, D or D, A, B, C etc.)
@@ -78,26 +79,8 @@ public class RaceTrack {
         //Set up route for car
     }
 
-
     //Add checkpoints to track
-    public void addCheckPoints(ObservableList list){
-        CheckPoint cp1 = new CheckPoint( 100, 100, "A");
-        CheckPoint cp2 = new CheckPoint( 500, 100, "B");
-        CheckPoint cp3 = new CheckPoint( 500, 500, "C");
-        CheckPoint cp4 = new CheckPoint( 100, 500, "D");
-        checkPoints.add(cp1);
-        checkPoints.add(cp2);
-        checkPoints.add(cp3);
-        checkPoints.add(cp4);
-        list.addAll(cp1, cp2, cp3, cp4);
-    }
-
-    //Add checkpoints to track
-    public void addCheckPoints(){
-        CheckPoint cp1 = new CheckPoint( 100, 100, "A");
-        CheckPoint cp2 = new CheckPoint( 500, 100, "B");
-        CheckPoint cp3 = new CheckPoint( 500, 500, "C");
-        CheckPoint cp4 = new CheckPoint( 100, 500, "D");
+    public void addCheckPoints(CheckPoint cp1, CheckPoint cp2, CheckPoint cp3, CheckPoint cp4){
         checkPoints.add(cp1);
         checkPoints.add(cp2);
         checkPoints.add(cp3);
@@ -145,6 +128,7 @@ public class RaceTrack {
         return true;
     }
 
+
     //Moves car depending on orientation
     public boolean move(Car car, ObservableList list){
         CheckPoint nextCP = car.getRoute().get(car.getCurrentCP()+1);
@@ -162,11 +146,10 @@ public class RaceTrack {
                 dif = nextXPos - curCarX;               //Find when will it exceed
                 remainder = speed - dif;                //Calculate remaining distance to travel
                 car.setX(curCarX + dif);          //Move car to x value checkpoint
-                if(checkNotFinishing(car)) {
+                if(checkNotFinishing(car))
                     car.setY(curCarY + remainder);    //Move car the rest of distance
-                    car.rotate();
-                }
                 car.setOrientation(2);                  //Set up new orientation
+                car.rotate();
                 car.incrementCP();
             }
             else {
@@ -178,11 +161,10 @@ public class RaceTrack {
                 dif = nextYPos - curCarY;               //Find distance it will exceed
                 remainder = speed - dif;                //Calculate remaining distance to travel
                 car.setY(curCarY + dif);          //
-                if(checkNotFinishing(car)) {
+                if(checkNotFinishing(car))
                     car.setX(curCarX - remainder);
-                    car.rotate();
-                }
                 car.setOrientation(3);
+                car.rotate();
                 car.incrementCP();
             }
             else
@@ -195,11 +177,10 @@ public class RaceTrack {
                 dif = dif*(-1);
                 remainder = speed - dif;                //Calculate remaining distance to travel
                 car.setX(curCarX - dif);          //Move car to x value checkpoint
-                if(checkNotFinishing(car)) {
+                if(checkNotFinishing(car))
                     car.setY(curCarY - remainder);    //Move car the rest of distance
-                    car.rotate();
-                }
                 car.setOrientation(4);                  //Set up new orientation
+                car.rotate();
                 car.incrementCP();
             }
             else
@@ -211,11 +192,10 @@ public class RaceTrack {
                 dif = dif*(-1);
                 remainder = speed - dif;                //Calculate remaining distance to travel
                 car.setY(curCarY - dif);          //
-                if(checkNotFinishing(car)){
+                if(checkNotFinishing(car))
                     car.setX(curCarX + remainder);
-                    car.rotate();
-                }
                 car.setOrientation(1);
+                car.rotate();
                 car.incrementCP();
             }
             else
@@ -236,10 +216,20 @@ public class RaceTrack {
         if(car.getOdometer() >= length) {
             car.setActive(false);
             car.endTime();
-            Text result = new Text(550, height, "Car:" +car.toString()+
-                    " \nJust finished with a time of:"+car.getTime());
+            //resultsDisplay();
+
+            if (car.getTime() != prevCar.getTime())
+                carCount++;
+
+            car.setCarStats(carCount);
+
+            Text result = new Text(550, height, car.getCarStats());
+
             height += 50;
             list.add(result);
+
+            prevCar = car;
+
             return true;
         }
         return false;
@@ -252,12 +242,7 @@ public class RaceTrack {
             if(cars.get(i).getSpeed() < slowest)
                 slowest = cars.get(i).getSpeed();
         }
-        moves = getLength()/slowest;
         return slowest;
-    }
-
-    public int getMoves() {
-        return moves;
     }
 
     public void setLines(ObservableList list){
@@ -270,7 +255,7 @@ public class RaceTrack {
 
     private void placeRoad(CheckPoint start, CheckPoint end, ObservableList list) {
         Line line = new Line();
-        line.setStrokeWidth(40);
+        line.setStrokeWidth(30);
         line.setStroke(Color.LIGHTGRAY);
         line.setStartX(start.getCenterX());
         line.setEndX(end.getCenterX());
@@ -279,7 +264,7 @@ public class RaceTrack {
         list.add(line);
     }
 
-    public void resultsDisplay(){
+    /*public void resultsDisplay(){
 
         Collections.sort(cars);
 
@@ -320,7 +305,7 @@ public class RaceTrack {
             }
         }
         
-    }
+    }*/
 
     //Get length of track
     public int getLength() {

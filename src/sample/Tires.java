@@ -3,11 +3,11 @@ package sample;
 public class Tires {
 
     private String tireType;
-    private double speed;
+    private int speed;
 
     public Tires() {
         tireType = "No tires!";
-        speed = 0.0;
+        speed = 0;
     }
 
     public Tires(String tireType) {
@@ -38,7 +38,7 @@ public class Tires {
         return speed;
     }
 
-    public void setSpeed(double speed) {
+    public void setSpeed(int speed) {
         this.speed = speed;
     }
 

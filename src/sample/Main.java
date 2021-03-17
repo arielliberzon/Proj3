@@ -41,7 +41,7 @@ public class Main extends Application {
         primaryStage.show();
 
         //Set up track and its objects
-        RaceTrack track = new RaceTrack();
+        RaceManager track = new RaceManager();
         track.addCheckPoints();                     //Add checkpoints to track
         track.placeCarsOnTrack(cars);               //Put cars on track
         track.setLines(list[0]);                    //Add lines to connect checkpoints
@@ -71,7 +71,8 @@ public class Main extends Application {
                         e -> list[0] = track.moveCars(list[0])));
 
         //Move cars every 50 milli seconds enough times for car cars to make all "moves" around track to finish
-        move.setCycleCount(track.getMoves());
+        System.out.println("Moves needed"+track.getMoves()+1);
+        move.setCycleCount(track.getMoves()+1);
         move.play();
     }
     public static void main(String[] args) {

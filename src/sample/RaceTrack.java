@@ -4,8 +4,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.shape.Line;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-
-import java.util.ArrayList;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -218,7 +216,6 @@ public class RaceTrack {
                     " \nJust finished with a time of:"+car.getTime());
             height += 50;
             list.add(result);
-            System.out.println(car.toString()+" Just finished with a time of: "+car.getTime() +" seconds");
             return true;
         }
         return false;

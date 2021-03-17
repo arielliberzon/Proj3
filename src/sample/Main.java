@@ -64,9 +64,9 @@ public class Main extends Application {
         int slowest = track.getSlowestSpeed();
         int moves = track.getLength()/slowest;
 
-        Button startOverButton = new Button("Start Over");          //Star over button
-        startOverButton.setLayoutX(400);
-        startOverButton.setLayoutY(610);
+        Button startOverButton = new Button("Restart Race");          //Star over button
+        startOverButton.setLayoutX(100);
+        startOverButton.setLayoutY(550);
 
         //If start over is pressed the whole program is restarted
         startOverButton.setOnAction(e -> {

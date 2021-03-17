@@ -247,7 +247,7 @@ public class Car extends Rectangle implements Comparable<Car> {
         this.finish = finish;
     }
 
-    public void setSpeed() {
+    private void setSpeed() {
         speed = engine.getSpeed() + tires.getSpeed() + transmission.getSpeed();
     }
 

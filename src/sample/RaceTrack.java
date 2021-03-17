@@ -27,6 +27,9 @@ public class RaceTrack {
         addCheckPoints();
     }
 
+    //Holds the number of "moves" for all cars to complete race
+    int moves;
+
     private int height = 100;
 
     //Puts the cars in track and calls to set up their routes
@@ -49,6 +52,7 @@ public class RaceTrack {
             cars.add(carArr[i]);
         }
         cars.forEach(car -> car.startTime());
+        getSlowestSpeed();
     }
 
 
@@ -75,6 +79,7 @@ public class RaceTrack {
         car.setY(path.get(0).getCenterY());
         //Set up route for car
     }
+
 
     //Add checkpoints to track
     public void addCheckPoints(ObservableList list){
@@ -249,7 +254,12 @@ public class RaceTrack {
             if(cars.get(i).getSpeed() < slowest)
                 slowest = cars.get(i).getSpeed();
         }
+        moves = getLength()/slowest;
         return slowest;
+    }
+
+    public int getMoves() {
+        return moves;
     }
 
     public void setLines(ObservableList list){

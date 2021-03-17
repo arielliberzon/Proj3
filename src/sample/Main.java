@@ -41,22 +41,19 @@ public class Main extends Application {
 
         //Set up track and its objects
         RaceTrack track = new RaceTrack();
-        track.placeCarsOnTrack(cars);
-        track.setLines(list[0]);
-        list[0].addAll(track.getCheckPoints());
+        track.placeCarsOnTrack(cars);                           //Place cars on track
+        track.setLines(list[0]);                                //Place "roads" connecting checkpoints
+        list[0].addAll(track.getCheckPoints());                 //Get checkpoints to show in GUI
 
-        //Add all cars
-        for (int i = 0; i < cars.length; i++) {
+        //Add all cars to GUI
+        for (int i = 0; i < cars.length; i++)
             list[0].add(cars[i]);
-        }
 
-        //Get slowest and calculate number of "moves" needed to complete track for slowest car
-        int slowest = track.getSlowestSpeed();
-        int moves = track.getLength()/slowest;
-
+        //Create and set restart race button
         Button startOverButton = new Button("Restart Race");          //Star over button
         startOverButton.setLayoutX(100);
         startOverButton.setLayoutY(550);
+        list[0].add(startOverButton);
 
         //If start over is pressed the whole program is restarted
         startOverButton.setOnAction(e -> {
@@ -67,14 +64,12 @@ public class Main extends Application {
             }
         });
 
-        list[0].add(startOverButton);
-
-        //Move cars ever 50 milli seconds
+        //Move cars every 50 milli seconds
         Timeline move = new Timeline(new KeyFrame(Duration.millis(50),
                         e -> list[0] = track.moveCars(list[0])));
 
         //Move cars every 50 milli seconds enough times for car cars to make all "moves" around track to finish
-        move.setCycleCount(moves);
+        move.setCycleCount(track.getMoves());
         move.play();
     }
 

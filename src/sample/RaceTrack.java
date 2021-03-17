@@ -55,8 +55,6 @@ public class RaceTrack {
         getSlowestSpeed();
     }
 
-
-
     //Sets up the cars routes(In order of how they are going to pass them A, B, C, D or D, A, B, C etc.)
     private void setUpRoutes(Car car, int index){
         car.setOrientation(index + 1);

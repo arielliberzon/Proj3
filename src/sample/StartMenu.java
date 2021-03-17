@@ -16,13 +16,17 @@ import javafx.stage.Stage;
 public class StartMenu {
     // DELETE THIS LINE
 
-    private static int numCars = 1;
 
-    private static int playerCount = 1;
+    private int numCars;
+    private int playerCount;
+    private Car car;
 
-    private static Car car;
+    public StartMenu() {
+        numCars = 1;
+        playerCount = 1;
+    }
 
-    public static int firstDisplay(){
+    public int firstDisplay() {
 
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -50,7 +54,7 @@ public class StartMenu {
         return numCars;
     }
 
-    public static Car secondDisplay() {
+    public Car secondDisplay() {
 
         String model = "Car #" + playerCount;
 
@@ -116,7 +120,7 @@ public class StartMenu {
         return car;
     }
 
-    private static Car createCar(String model, String[] data) {
+    private Car createCar(String model, String[] data) {
             Engine engine = new Engine(data[0]);
             Tires tires = new Tires(data[1]);
             Transmission transmission = new Transmission(data[2]);
@@ -125,7 +129,7 @@ public class StartMenu {
         return car;
     }
 
-    private static javafx.scene.paint.Color getColor(String data) {
+    private javafx.scene.paint.Color getColor(String data) {
         if (data.equals("Blue"))
             return javafx.scene.paint.Color.BLUE;
         if (data.equals("Red"))

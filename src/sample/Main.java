@@ -19,10 +19,11 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
 
 
-        int test = StartMenu.firstDisplay();
+        StartMenu startMenu = new StartMenu();
+        int test = startMenu.firstDisplay();
         Car[] cars = new Car[test];
         for (int i = 0; i < test; i++) {
-            Car car = StartMenu.secondDisplay();
+            Car car = startMenu.secondDisplay();
             cars[i] = car;
             System.out.println(cars[i].toString()+"!");
         }

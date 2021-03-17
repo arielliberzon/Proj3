@@ -183,7 +183,7 @@ public class RaceTrack {
             }
             else
                 car.setX(curCarX - speed);
-        }
+        }//
         else if (orientation == 4) {                        //Traveling up
             if(curCarY - speed <= nextYPos){             //If moving will exceed checkpoint turn
                 dif = nextYPos - curCarY;               //Find distance it will exceed

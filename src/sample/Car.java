@@ -119,7 +119,7 @@ public class Car extends Rectangle {
     public double endTime(){
         finish = Instant.now();
         long timeElapsed = Duration.between(start, finish).toMillis();
-        time = (double) (timeElapsed / 1000);
+        time = (timeElapsed / 1000.0);
         return time;
     }
 

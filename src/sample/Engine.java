@@ -3,11 +3,11 @@ package sample;
 public class Engine {
 
     private String engineType;
-    private double speed;
+    private int speed;
 
     public Engine() {
         engineType = "No";
-        speed = 0.0;
+        speed = 0;
     }
 
     public Engine(String engineType) {
@@ -38,7 +38,7 @@ public class Engine {
         return speed;
     }
 
-    public void setSpeed(double speed) {
+    public void setSpeed(int speed) {
         this.speed = speed;
     }
 

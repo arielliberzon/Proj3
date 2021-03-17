@@ -6,7 +6,8 @@ public class Transmission {
     private int speed;
 
     public Transmission() {
-        //FIX
+        tType = "No transmission!";
+        speed = 0;
     }
 
     public Transmission(String tType) {

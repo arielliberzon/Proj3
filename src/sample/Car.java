@@ -50,6 +50,18 @@ public class Car extends Rectangle implements Comparable<Car> {
 
     private String carStats;
 
+    public Car() {
+        carNum = 0;
+        name = "No Name";
+        engineHP = new Engine();
+        tireRating = new Tires();
+        transmission = new Transmission();
+        color = Color.BLACK;
+        speed = 1;
+        time = 0.0;
+        odometer = 1200;
+    }
+
     //Constructor
     public Car(int orientation, double x, double y, int speed, Color color) {
         this.orientation = orientation;
@@ -69,6 +81,7 @@ public class Car extends Rectangle implements Comparable<Car> {
         this.tireRating = tireRating;
         this.transmission = transmission;
         this.color = color;
+        setFill(color);
         speed = 15;
     }
 
@@ -170,13 +183,18 @@ public class Car extends Rectangle implements Comparable<Car> {
         this.odometer = odometer;
     }
 
-    public void setCarStats(String stats){
-
-        carStats = stats;
+    public void setCarStats(int place){
+        if (place == 1)
+            carStats = name + " finished 1st with a time of " + time + ".";
+        if (place == 2)
+            carStats = name + " finished 2nd with a time of " + time + ".";
+        if (place == 3)
+            carStats = name + " finished 3rd with a time of " + time + ".";
+        if (place == 4)
+            carStats = name + " finished 4th with a time of " + time + ".";
     }
 
     public String getCarStats(){
-
         return carStats;
     }
 

@@ -21,12 +21,12 @@ public class Main extends Application {
 
         //Ask user for number of cars
         StartMenu startMenu = new StartMenu();
-        int numberOfCars = startMenu.firstDisplay();
+        int numberOfCars = startMenu.playerDisplay();
 
         //Ask user to set up cars
         Car[] cars = new Car[numberOfCars];
         for (int i = 0; i < numberOfCars; i++) {
-            Car car = startMenu.secondDisplay();
+            Car car = startMenu.carDisplay();
             cars[i] = car;
         }
 

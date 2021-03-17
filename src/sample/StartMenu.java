@@ -1,3 +1,13 @@
+/**
+ *  This is a class used by the JavaFX application (main) to set the number
+ *  of cars in the race and then create each car by choosing its attributes
+ *  such as engine, color, etc.
+ *  If the user hits "Enter" when choosing the number of cars and leaves the
+ *  field blank then the number of cars will be set to 1
+ *  If the user hits "Enter" when selecting the car's attributes leaves at
+ *  LEAST ONE field blank then a car with the will be created using the
+ *  default options array
+ */
 package sample;
 
 import javafx.geometry.Pos;
@@ -14,19 +24,40 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class StartMenu {
-    // DELETE THIS LINE
-
 
     private int numCars;
     private int playerCount;
     private Car car;
+    private String[] options = new String[4];
 
+    /**
+     * Final values that are used in the display methods
+     */
+    private final String[] defOpts = new String[] {"Rotary Engine", "All-Season",
+            "Automatic Transmission", "Blue"};
+
+    private final String[] engineTypes = new String[] {"Rotary Engine",
+            "Diesel Engine", "Gasoline Engine", "Radial Engine"};
+    private final String[] tireTypes = new String[] {"All-Season", "Touring",
+            "Performance", "Track & Competition"};
+    private final String[] transmissionTypes = new String[] {"Automatic Transmission",
+            "Manual Transmission", "Automated Manual Transmission",
+            "Continuously Variable Transmission"};
+    private final String[] colorTypes = new String[] {"Blue", "Red", "Green", "Yellow"};
+
+    /**
+     * Default constructor
+     */
     public StartMenu() {
         numCars = 1;
         playerCount = 1;
     }
 
-    public int firstDisplay() {
+    /**
+     * Presents a GUI to select the number of players
+     * @return The number of players/cars participating in the race
+     */
+    public int playerDisplay() {
 
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -34,17 +65,17 @@ public class StartMenu {
         ChoiceBox<Integer> numChoice = new ChoiceBox<Integer>();
         numChoice.getItems().addAll(1,2,3,4);
 
-        Button nextButton = new Button("Next") ;
-        nextButton.setPrefSize(100, 50);
+        Button enterButton = new Button("Enter") ;
+        enterButton.setPrefSize(100, 50);
         Font font = Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 18);
         Label title = new Label("Select Number of Cars:");
         title.setFont(font);
 
         numChoice.setOnAction(e -> numCars = numChoice.getValue());
-        nextButton.setOnAction(e -> stage.close());
+        enterButton.setOnAction(e -> stage.close());
 
         VBox layout = new VBox(20);
-        layout.getChildren().addAll(title, numChoice, nextButton);
+        layout.getChildren().addAll(title, numChoice, enterButton);
         layout.setAlignment(Pos.CENTER);
 
         Scene introScene = new Scene(layout, 300, 200);
@@ -54,18 +85,13 @@ public class StartMenu {
         return numCars;
     }
 
-    public Car secondDisplay() {
+    /**
+     * Presents a GUI to create a car based on the selected attributes
+     * @return A car object that will added to the race
+     */
+    public Car carDisplay() {
 
         String name = "Car #" + playerCount;
-
-        String[] options = new String[4];
-        String[] defOpts = new String[] {"Rotary Engine", "All-Season", "Automatic Transmission", "Blue"};
-
-        String[] engineTypes = new String[] {"Rotary Engine", "Diesel Engine", "Gasoline Engine", "Radial Engine"};
-        String[] tireTypes = new String[] {"All-Season", "Touring", "Performance", "Track & Competition"};
-        String[] transmissionTypes = new String[] {"Automatic Transmission", "Manual Transmission",
-        "Automated Manual Transmission", "Continuously Variable Transmission"};
-        String[] colorTypes = new String[] {"Blue", "Red", "Green", "Yellow"};
 
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -120,6 +146,12 @@ public class StartMenu {
         return car;
     }
 
+    /**
+     * Helper method to create a car based on an array of data
+     * @param name String that represents name of the car (ex: Car #1)
+     * @param data String array that has names for each attribute (engine, tires, etc.)
+     * @return Car object that was created using the attributes listed above
+     */
     private Car createCar(String name, String[] data) {
             Engine engine = new Engine(data[0]);
             Tires tires = new Tires(data[1]);
@@ -129,6 +161,11 @@ public class StartMenu {
         return car;
     }
 
+    /**
+     * Helper method to set the color of a car based on a string
+     * @param data String array which has the color reference stored in its final index
+     * @return The color object that matches the reference
+     */
     private javafx.scene.paint.Color getColor(String data) {
         if (data.equals("Blue"))
             return javafx.scene.paint.Color.BLUE;

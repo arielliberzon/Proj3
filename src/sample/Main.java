@@ -7,27 +7,28 @@ import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Main is the class that runs the simulation. The simulation is a car race where cars need to pass through all
+ * checkpoints in order to complete the race. User is first allowed to pick the number of cars and configure them.
+ */
 public class Main extends Application {
-    // DELETE THIS LINE
 
     @Override
     public void start(Stage primaryStage) {
 
-
+        //Ask user for number of cars
         StartMenu startMenu = new StartMenu();
-        int test = startMenu.firstDisplay();
-        Car[] cars = new Car[test];
-        for (int i = 0; i < test; i++) {
+        int numberOfCars = startMenu.firstDisplay();
+
+        //Ask user to set up cars
+        Car[] cars = new Car[numberOfCars];
+        for (int i = 0; i < numberOfCars; i++) {
             Car car = startMenu.secondDisplay();
             cars[i] = car;
-            System.out.println(cars[i].toString()+"!");
         }
-
 
         //Set up GUI
         int width = 1024;
@@ -40,35 +41,21 @@ public class Main extends Application {
         primaryStage.show();
 
         //Set up track and its objects
-
         RaceTrack track = new RaceTrack();
-        CheckPoint cp1 = new CheckPoint( 100, 100, "A");
-        CheckPoint cp2 = new CheckPoint( 500, 100, "B");
-        CheckPoint cp3 = new CheckPoint( 500, 500, "C");
-        CheckPoint cp4 = new CheckPoint( 100, 500, "D");
-        track.addCheckPoints(cp1, cp2, cp3, cp4);
-
-        track.placeCarsOnTrack(cars);
-
-        //Add lines in between points
-        track.setLines(list[0]);
-
-        //Add checkpoints
-        list[0].addAll(cp1, cp2, cp3, cp4);
+        track.addCheckPoints();                     //Add checkpoints to track
+        track.placeCarsOnTrack(cars);               //Put cars on track
+        track.setLines(list[0]);                    //Add lines to connect checkpoints
+        list[0].addAll(track.getCheckPoints());     //Get checkpoints for GUI
 
         //Add cars
-        for (int i = 0; i < cars.length; i++) {
+        for (int i = 0; i < cars.length; i++)
             list[0].add(cars[i]);
-            System.out.println(cars[i].toString()+"?");
-        }
 
-        //Get slowest and calculate number of "moves" needed to complete track for slowest car
-        int slowest = track.getSlowestSpeed();
-        int moves = track.getLength()/slowest;
-
-        Button startOverButton = new Button("Restart Race");          //Star over button
+        //Set up start over button
+        Button startOverButton = new Button("Restart Race");
         startOverButton.setLayoutX(100);
         startOverButton.setLayoutY(550);
+        list[0].add(startOverButton);
 
         //If start over is pressed the whole program is restarted
         startOverButton.setOnAction(e -> {
@@ -79,19 +66,14 @@ public class Main extends Application {
             }
         });
 
-        list[0].add(startOverButton);
-
         //Move cars ever 50 milli seconds
         Timeline move = new Timeline(new KeyFrame(Duration.millis(50),
                         e -> list[0] = track.moveCars(list[0])));
 
         //Move cars every 50 milli seconds enough times for car cars to make all "moves" around track to finish
-        move.setCycleCount(moves);
+        move.setCycleCount(track.getMoves());
         move.play();
     }
-
-    //DELETE THIS COMMENT
-
     public static void main(String[] args) {
         launch(args);
     }

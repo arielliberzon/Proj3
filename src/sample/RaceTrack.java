@@ -5,11 +5,9 @@ import javafx.scene.shape.Line;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import java.util.ArrayList;
-import java.util.Collections;
-//
 
 public class RaceTrack {
-    // DELETE THIS LINE
+
     //List of cars in track
     private ArrayList<Car> cars = new ArrayList<Car>();
 
@@ -26,27 +24,15 @@ public class RaceTrack {
 
     private Car prevCar;
 
+    private int moves;
+
+    private int height = 100;
+
     //Default constructor, default length of track.
     public RaceTrack() {
         length = 1200;
         carCount = 0;
         prevCar = new Car();
-    }
-
-    private int height = 100;
-
-    //Puts the cars in track and calls to set up their routes
-    public void placeCarsOnTrack(Car c1, Car c2, Car c3, Car c4){
-        setUpRoutes(c1, 0);
-        setUpRoutes(c2, 1);
-        setUpRoutes(c3, 2);
-        setUpRoutes(c4, 3);
-
-        cars.add(c1);
-        cars.add(c2);
-        cars.add(c3);
-        cars.add(c4);
-        cars.forEach(car -> car.startTime());
     }
 
     public void placeCarsOnTrack(Car[] carArr) {
@@ -55,6 +41,33 @@ public class RaceTrack {
             cars.add(carArr[i]);
         }
         cars.forEach(car -> car.startTime());
+        calcSlowestSpeed();
+    }
+
+    public void addCheckPoints(){
+        CheckPoint cp1 = new CheckPoint( 100, 100, "A");
+        CheckPoint cp2 = new CheckPoint( 500, 100, "B");
+        CheckPoint cp3 = new CheckPoint( 500, 500, "C");
+        CheckPoint cp4 = new CheckPoint( 100, 500, "D");
+        checkPoints.add(cp1);
+        checkPoints.add(cp2);
+        checkPoints.add(cp3);
+        checkPoints.add(cp4);
+    }
+
+    // Get speed of the slowest car so simulator can run only for as long as needed for slowest car to finish
+    public int calcSlowestSpeed(){
+        int slowest = 1000;
+        for(int i = 0; i < cars.size(); i++){
+            if(cars.get(i).getSpeed() < slowest)
+                slowest = cars.get(i).getSpeed();
+        }
+        moves = getLength()/slowest;
+        return slowest;
+    }
+
+    public int getMoves() {
+        return moves;
     }
 
     //Sets up the cars routes(In order of how they are going to pass them A, B, C, D or D, A, B, C etc.)
@@ -80,14 +93,6 @@ public class RaceTrack {
         //Set up route for car
     }
 
-    //Add checkpoints to track
-    public void addCheckPoints(CheckPoint cp1, CheckPoint cp2, CheckPoint cp3, CheckPoint cp4){
-        checkPoints.add(cp1);
-        checkPoints.add(cp2);
-        checkPoints.add(cp3);
-        checkPoints.add(cp4);
-    }
-
     //Moves cars (Erases old cars' positions and adds them to list of visual objects with new position)
     //So that they are rendered in new position
     public ObservableList moveCars (ObservableList list){
@@ -103,34 +108,6 @@ public class RaceTrack {
         return list;                                                        //Return updated list
     }
 
-    //Turns car if cars reached checkpoint. Sets new orientation
-    private boolean turnCar(Car car){
-        int orientation = car.getOrientation();
-        double xCur = car.getX();                                 //Current x position of car
-        double yCur = car.getY();                                 //Current y position of car
-        CheckPoint nextCP = car.getRoute().get(car.getCurrentCP()+1);   //Get next checkpoint
-        double nextXPos = nextCP.getCenterX();                          //x position of next checkpoint
-        double nextYPos = nextCP.getCenterY();                          //y position of next checkpoint
-        if(orientation == 1 && xCur >= nextXPos ) {                     //If facing right
-            car.setOrientation(2);
-        }
-        else if(orientation == 2 && yCur >= nextYPos) {                 //If facing down
-            car.setOrientation(3);
-        }
-        else if(orientation == 3 && xCur <= nextXPos) {                 //If facing left
-            car.setOrientation(4);
-        }
-        else if(orientation == 4 && yCur <= nextYPos) {                 //If facing up
-            car.setOrientation(1);
-        }
-        else
-            return true;
-        car.incrementCP();
-        return true;
-    }
-
-
-    //Moves car depending on orientation
     public boolean move(Car car, ObservableList list){
         CheckPoint nextCP = car.getRoute().get(car.getCurrentCP()+1);
         int nextXPos = (int)nextCP.getCenterX();                          //x position of next checkpoint
@@ -147,10 +124,11 @@ public class RaceTrack {
                 dif = nextXPos - curCarX;               //Find when will it exceed
                 remainder = speed - dif;                //Calculate remaining distance to travel
                 car.setX(curCarX + dif);          //Move car to x value checkpoint
-                if(checkNotFinishing(car))
+                if(checkNotFinishing(car)) {
                     car.setY(curCarY + remainder);    //Move car the rest of distance
+                    car.rotate();
+                }
                 car.setOrientation(2);                  //Set up new orientation
-                car.rotate();
                 car.incrementCP();
             }
             else {
@@ -162,10 +140,11 @@ public class RaceTrack {
                 dif = nextYPos - curCarY;               //Find distance it will exceed
                 remainder = speed - dif;                //Calculate remaining distance to travel
                 car.setY(curCarY + dif);          //
-                if(checkNotFinishing(car))
+                if(checkNotFinishing(car)) {
                     car.setX(curCarX - remainder);
+                    car.rotate();
+                }
                 car.setOrientation(3);
-                car.rotate();
                 car.incrementCP();
             }
             else
@@ -178,10 +157,11 @@ public class RaceTrack {
                 dif = dif*(-1);
                 remainder = speed - dif;                //Calculate remaining distance to travel
                 car.setX(curCarX - dif);          //Move car to x value checkpoint
-                if(checkNotFinishing(car))
+                if(checkNotFinishing(car)) {
                     car.setY(curCarY - remainder);    //Move car the rest of distance
+                    car.rotate();
+                }
                 car.setOrientation(4);                  //Set up new orientation
-                car.rotate();
                 car.incrementCP();
             }
             else
@@ -193,10 +173,11 @@ public class RaceTrack {
                 dif = dif*(-1);
                 remainder = speed - dif;                //Calculate remaining distance to travel
                 car.setY(curCarY - dif);          //
-                if(checkNotFinishing(car))
+                if(checkNotFinishing(car)){
                     car.setX(curCarX + remainder);
+                    car.rotate();
+                }
                 car.setOrientation(1);
-                car.rotate();
                 car.incrementCP();
             }
             else
@@ -236,15 +217,10 @@ public class RaceTrack {
         return false;
     }
 
-    // Get speed of the slowest car so simulator can run only for as long as needed for slowest car to finish
-    public int getSlowestSpeed(){
-        int slowest = 1000;
-        for(int i = 0; i < cars.size(); i++){
-            if(cars.get(i).getSpeed() < slowest)
-                slowest = cars.get(i).getSpeed();
-        }
-        return slowest;
-    }
+
+
+    //Moves car depending on orientation
+
 
     public void setLines(ObservableList list){
         placeRoad(checkPoints.get(0), checkPoints.get(1), list);

@@ -19,6 +19,9 @@ public class CheckPoint extends Circle {
     //Holds the name of the checkpoint
     private String name;
 
+    //Holds the number of "moves" for all cars to complete race
+    int moves;
+
     /**
      * Constructs a checkpoint
      * @param xCoord the x position to place the checkpoint at

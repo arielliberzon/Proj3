@@ -174,13 +174,13 @@ public class Car extends Rectangle implements Comparable<Car> {
 
     public void setCarStats(int place){
         if (place == 1)
-            carStats = name + " finished 1st with a time of " + time + ".";
+            carStats = name + " finished 1st with a time of " + time + " seconds.";
         if (place == 2)
-            carStats = name + " finished 2nd with a time of " + time + ".";
+            carStats = name + " finished 2nd with a time of " + time + " seconds.";
         if (place == 3)
-            carStats = name + " finished 3rd with a time of " + time + ".";
+            carStats = name + " finished 3rd with a time of " + time + " seconds.";
         if (place == 4)
-            carStats = name + " finished 4th with a time of " + time + ".";
+            carStats = name + " finished 4th with a time of " + time + " seconds.";
         if (place > 4)
             carStats = "place # is: " + place;
     }

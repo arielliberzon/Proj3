@@ -17,14 +17,14 @@ public class Tires {
     }
 
     private void setSpeed(String tireType) {
-        if (tireType.equals("Tires 1"))
+        if (tireType.equals("All-Season"))
             setSpeed(1);
-        if (tireType.equals("Tires 2"))
-            setSpeed(1);
-        if (tireType.equals("Tires 3"))
-            setSpeed(1);
-        if (tireType.equals("Tires 4"))
-            setSpeed(1);
+        if (tireType.equals("Touring"))
+            setSpeed(2);
+        if (tireType.equals("Performance"))
+            setSpeed(3);
+        if (tireType.equals("Track & Competition"))
+            setSpeed(4);
     }
 
     public String getTireType() {
@@ -35,7 +35,7 @@ public class Tires {
         this.tireType = tireType;
     }
 
-    public double getSpeed() {
+    public int getSpeed() {
         return speed;
     }
 

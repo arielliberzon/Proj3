@@ -59,12 +59,12 @@ public class StartMenu {
         String model = "Car #" + playerCount;
 
         String[] options = new String[4];
-        String[] defOpts = new String[] {"Engine 1", "Tire 1", "Transmission 1", "Blue"};
+        String[] defOpts = new String[] {"Rotary Engine", "All-Season", "Automatic Transmission", "Blue"};
 
-        String[] engineTypes = new String[] {"Engine 1", "Engine 2", "Engine 3", "Engine 4"};
-        String[] tireTypes = new String[] {"Tire 1", "Tire 2", "Tire 3", "Tire 4"};
-        String[] transmissionTypes = new String[] {"Transmission 1", "Transmission 2",
-        "Transmission 3", "Transmission 4"};
+        String[] engineTypes = new String[] {"Rotary Engine", "Diesel Engine", "Gasoline Engine", "Radial Engine"};
+        String[] tireTypes = new String[] {"All-Season", "Touring", "Performance", "Track & Competition"};
+        String[] transmissionTypes = new String[] {"Automatic Transmission", "Manual Transmission",
+        "Automated Manual Transmission", "Continuously Variable Transmission"};
         String[] colorTypes = new String[] {"Blue", "Red", "Green", "Yellow"};
 
         Stage stage = new Stage();

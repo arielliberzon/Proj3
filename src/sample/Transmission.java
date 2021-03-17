@@ -17,14 +17,14 @@ public class Transmission {
     }
 
     private void setSpeed(String tType) {
-        if (tType.equals("Transmission 1"))
-            setSpeed(1);
-        if (tType.equals("Transmission 2"))
-            setSpeed(2);
-        if (tType.equals("Transmission 3"))
+        if (tType.equals("Automatic Transmission"))
             setSpeed(3);
-        if (tType.equals("Transmission 4"))
+        if (tType.equals("Manual Transmission"))
             setSpeed(4);
+        if (tType.equals("Automated Manual Transmission"))
+            setSpeed(2);
+        if (tType.equals("Continuously Variable Transmission"))
+            setSpeed(1);
     }
 
     public String getType() {
@@ -35,7 +35,7 @@ public class Transmission {
         this.tType = tType;
     }
 
-    public double getSpeed() {
+    public int getSpeed() {
         return speed;
     }
 

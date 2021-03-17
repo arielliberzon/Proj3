@@ -17,14 +17,14 @@ public class Engine {
     }
 
     private void setSpeed(String engineType) {
-        if (engineType.equals("Engine 1"))
-            speed = 1;
-        if (engineType.equals("Engine 2"))
-            speed = 1;
-        if (engineType.equals("Engine 3"))
-            speed = 1;
-        if (engineType.equals("Engine 4"))
-            speed = 1;
+        if (engineType.equals("Rotary Engine"))
+            speed = 3;
+        if (engineType.equals("Diesel Engine"))
+            speed = 6;
+        if (engineType.equals("Gasoline Engine"))
+            speed = 4;
+        if (engineType.equals("Radial Engine"))
+            speed = 2;
     }
 
     public String getEngineType() {
@@ -35,7 +35,7 @@ public class Engine {
         this.engineType = engineType;
     }
 
-    public double getSpeed() {
+    public int getSpeed() {
         return speed;
     }
 

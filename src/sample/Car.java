@@ -16,9 +16,9 @@ public class Car extends Rectangle implements Comparable<Car> {
     private Color color;
     //Attributes not used yet
     private Transmission transmission;
-    private Engine engineHP;
+    private Engine engine;
     //private int torque;
-    private Tires tireRating;
+    private Tires tires;
     private String name;
 
     //Holds initial time
@@ -53,8 +53,8 @@ public class Car extends Rectangle implements Comparable<Car> {
     public Car() {
         carNum = 0;
         name = "No Name";
-        engineHP = new Engine();
-        tireRating = new Tires();
+        engine = new Engine();
+        tires = new Tires();
         transmission = new Transmission();
         color = Color.BLACK;
         speed = 1;
@@ -62,27 +62,16 @@ public class Car extends Rectangle implements Comparable<Car> {
         odometer = 1200;
     }
 
-    //Constructor
-    public Car(int orientation, double x, double y, int speed, Color color) {
-        this.orientation = orientation;
-        setX(x);
-        setY(y);
-        setFill(Color.LIGHTBLUE);
-        this.speed = speed;
-        setFill(color);
-        setSizes();
-    }
-
-    public Car(int carNum, String name, Engine engineHP, Tires tireRating,
+    public Car(int carNum, String name, Engine engine, Tires tires,
                Transmission transmission, Color color) {
         this.carNum = carNum;
         this.name = name;
-        this.engineHP = engineHP;
-        this.tireRating = tireRating;
+        this.engine = engine;
+        this.tires = tires;
         this.transmission = transmission;
         this.color = color;
         setFill(color);
-        speed = 15;
+        setSpeed();
     }
 
     public void setSizes(){
@@ -192,6 +181,8 @@ public class Car extends Rectangle implements Comparable<Car> {
             carStats = name + " finished 3rd with a time of " + time + ".";
         if (place == 4)
             carStats = name + " finished 4th with a time of " + time + ".";
+        if (place > 4)
+            carStats = "place # is: " + place;
     }
 
     public String getCarStats(){
@@ -217,27 +208,20 @@ public class Car extends Rectangle implements Comparable<Car> {
         this.transmission = transmission;
     }
 
-    public Engine getEngineHP() {
-        return engineHP;
+    public Engine getengine() {
+        return engine;
     }
 
-    public void setEngineHP(Engine engineHP) {
-        this.engineHP = engineHP;
+    public void setengine(Engine engine) {
+        this.engine = engine;
     }
 
-    /*public int getTorque() {
-        return torque;
-    }
-    public void setTorque(int torque) {
-        this.torque = torque;
-    }*/
-
-    public Tires getTireRating() {
-        return tireRating;
+    public Tires gettires() {
+        return tires;
     }
 
-    public void setTireRating(Tires tireRating) {
-        this.tireRating = tireRating;
+    public void settires(Tires tires) {
+        this.tires = tires;
     }
 
     public String getName() {
@@ -264,8 +248,8 @@ public class Car extends Rectangle implements Comparable<Car> {
         this.finish = finish;
     }
 
-    public void setSpeed(int speed) {
-        this.speed = speed;
+    public void setSpeed() {
+        speed = engine.getSpeed() + tires.getSpeed() + transmission.getSpeed();
     }
 
     public void setCurrentCP(int currentCP) {

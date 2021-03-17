@@ -196,12 +196,15 @@ public class RaceTrack {
     //Check if car finished. If odometer >=  length turn car off
     private boolean checkForFinish(Car car, ObservableList list) {
         if(car.getOdometer() >= length) {
+            System.out.println(carCount);
             car.setActive(false);
             car.endTime();
             //resultsDisplay();
 
-            if (car.getTime() != prevCar.getTime())
+            if (car.getTime() != prevCar.getTime()) {
                 carCount++;
+            }
+            //System.out.println(carCount);
 
             car.setCarStats(carCount);
 

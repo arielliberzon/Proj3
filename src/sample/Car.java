@@ -8,7 +8,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 
 public class Car extends Rectangle implements Comparable<Car> {
-    // DELETE THIS LINE
     private int place;
 
     private int carNum;

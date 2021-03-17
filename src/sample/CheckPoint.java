@@ -52,7 +52,8 @@ public class CheckPoint extends Circle {
         return "CheckPoint:" + "Name: "+name+" xCoord: "+getCenterX()+" yCoord: "+getCenterY();
     }
 
-    //Getters and setters
+
+    //Getters, setters and equals
 
     /**
      * Gets the x coordinate of the checkpoint
@@ -60,20 +61,6 @@ public class CheckPoint extends Circle {
      */
     public int getxCoord() {
         return xCoord;
-    }
-
-    /**
-     * Overriding equal: Checks whether o == this
-     * param o the object to test for equality
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CheckPoint)) return false;
-        CheckPoint that = (CheckPoint) o;
-        return xCoord == that.xCoord &&
-                yCoord == that.yCoord &&
-                Objects.equals(name, that.name);
     }
 
     /**
@@ -115,4 +102,19 @@ public class CheckPoint extends Circle {
     public void setName(String name) {
         this.name = name;
     }
+
+    /**
+     * Overriding equal: Checks whether o == this
+     * param o the object to test for equality
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CheckPoint)) return false;
+        CheckPoint that = (CheckPoint) o;
+        return xCoord == that.xCoord &&
+                yCoord == that.yCoord &&
+                Objects.equals(name, that.name);
+    }
+
 }

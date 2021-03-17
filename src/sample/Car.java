@@ -3,7 +3,7 @@
  * engine, tires, transmission, and color that the user can chose (up to 4 options for
  * each). Car is based on a rectangle and its orientation reflects its appearance on the
  * track. Every car also has a set of X and Y coordinates that determine its place on the
- * track.
+ * track along with references to its starting checkpoint and route.
  */
 package sample;
 
@@ -12,6 +12,7 @@ import javafx.scene.shape.Rectangle;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Car extends Rectangle {
 
@@ -123,11 +124,6 @@ public class Car extends Rectangle {
         return time;
     }
 
-    @Override
-    public String toString() {
-        return name;
-    }
-
     //Used so far getters and setters
     public int getCurrentCP() {
         return currentCP;
@@ -198,8 +194,55 @@ public class Car extends Rectangle {
         return carStats;
     }
 
+    /**
+     * Adds up the speed value for all of the car's relevant components
+     * sets that value as the car's speed
+     */
+    private void setSpeed() {
+        speed = engine.getSpeed() + tires.getSpeed() + transmission.getSpeed();
+    }
 
-    //Getters and setters not used
+    /**
+     * Overridden toString method
+     * @return Car name
+     */
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    /**
+     * Overridden equals method
+     * @param o Object
+     * @return true if they're the same
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Car)) return false;
+        Car that = (Car) o;
+        return carNum == that.carNum &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(engine, that.engine) &&
+                Objects.equals(tires, that.tires) &&
+                Objects.equals(transmission, that.transmission) &&
+                Objects.equals(color, that.color);
+    }
+
+    /**
+     * Unused getter and setter methods
+     */
+    public void setCurrentCP(int currentCP) {
+        this.currentCP = currentCP;
+    }
+
+    public int getPlace() {
+        return place;
+    }
+
+    public void setPlace(int place) {
+        this.place = place;
+    }
 
     public void setTime(int time) {
         this.time = time;
@@ -239,41 +282,5 @@ public class Car extends Rectangle {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Instant getStart() {
-        return start;
-    }
-
-    public void setStart(Instant start) {
-        this.start = start;
-    }
-
-    public Instant getFinish() {
-        return finish;
-    }
-
-    public void setFinish(Instant finish) {
-        this.finish = finish;
-    }
-
-    /**
-     * Adds up the speed value for all of the car's relevant components
-     * sets that value as the car's speed
-     */
-    private void setSpeed() {
-        speed = engine.getSpeed() + tires.getSpeed() + transmission.getSpeed();
-    }
-
-    public void setCurrentCP(int currentCP) {
-        this.currentCP = currentCP;
-    }
-
-    public int getPlace() {
-        return place;
-    }
-
-    public void setPlace(int place) {
-        this.place = place;
     }
 }

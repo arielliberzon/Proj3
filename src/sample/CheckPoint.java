@@ -69,7 +69,7 @@ public class CheckPoint extends Circle {
 
     /**
      * Sets the x coordinate of the checkpoint
-     * @param xCoord the y coordinate of the checkpoint
+     * @param xCoord the x coordinate of the checkpoint
      */
     public void setxCoord(int xCoord) {
         this.xCoord = xCoord;

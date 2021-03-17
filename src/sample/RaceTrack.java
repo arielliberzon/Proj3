@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import java.util.ArrayList;
 import java.util.Collections;
+//
 
 public class RaceTrack {
 //test

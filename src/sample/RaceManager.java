@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 /**
  * RaceManager handles the logic of the race. It manages how car moves and when they finish the race.
+ * @author Samuel Hernandez Alvarez
  */
 public class RaceManager {
 
@@ -345,6 +346,7 @@ public class RaceManager {
      * @param car the car to check for completion
      * @param list the list to add the car result information
      * @return true if car finished race, false otherwise
+     * @author Michael Skuncik and Samuel Hernandez
      */
     //Check if car finished. If odometer >=  length turn car off
     private boolean checkForFinish(Car car, ObservableList list) {

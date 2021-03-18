@@ -13,6 +13,7 @@ import javafx.util.Duration;
 /**
  * Main is the class that runs the simulation. The simulation is a car race where cars need to pass through all
  * checkpoints in order to complete the race. User is first allowed to pick the number of cars and configure them.
+ * @author Samuel Hernandez
  */
 public class Main extends Application {
 
@@ -20,10 +21,12 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
 
         //Ask user for number of cars
+        //@author Ariel Liberzon
         StartMenu startMenu = new StartMenu();
         int numberOfCars = startMenu.playerDisplay();
 
         //Ask user to set up cars
+        //@author Ariel Liberzon
         Car[] cars = new Car[numberOfCars];
         for (int i = 0; i < numberOfCars; i++) {
             Car car = startMenu.carDisplay();

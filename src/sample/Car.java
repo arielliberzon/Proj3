@@ -105,6 +105,10 @@ public class Car extends Rectangle {
         }
     }
 
+    /**
+     * Rotate method changes the width and height of a car to make it seem like it turned
+     * It just switches height and width.
+     */
     public void rotate(){
         double saved = getWidth();
         setWidth(getHeight());

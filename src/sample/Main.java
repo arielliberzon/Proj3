@@ -56,7 +56,7 @@ public class Main extends Application {
         for (Car car : cars) list[0].add(car);
 
         //Set up start over button
-        Button startOverButton = new Button("Restart Race");
+        Button startOverButton = new Button("New Race");
         startOverButton.setLayoutX(100);
         startOverButton.setLayoutY(550);
         list[0].add(startOverButton);

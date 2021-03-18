@@ -6,9 +6,9 @@ import java.util.Objects;
 
 /**
  * Class checkpoint is a place where cars have to pass through in order to complete a race
+ * @author  Samuel Hernandez
  */
 public class CheckPoint extends Circle {
-    // DELETE THIS LINE
 
     //xCoord holds the x position of the checkpoint
     private int xCoord;
@@ -18,9 +18,6 @@ public class CheckPoint extends Circle {
 
     //Holds the name of the checkpoint
     private String name;
-
-    //Holds the number of "moves" for all cars to complete race
-    int moves;
 
     /**
      * Constructs a checkpoint

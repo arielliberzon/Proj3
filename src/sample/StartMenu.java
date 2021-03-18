@@ -7,6 +7,8 @@
  *  If the user hits "Enter" when selecting the car's attributes leaves at
  *  LEAST ONE field blank then a car with the will be created using the
  *  default options array
+ *
+ *  @author A. Liberzon
  */
 package sample;
 

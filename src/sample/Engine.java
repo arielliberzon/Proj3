@@ -5,6 +5,7 @@ import java.util.Objects;
 
 /**
  * class for the Engine object that affects the speed of the Car
+ * @author A. Liberzon & M. Skuncik
  */
 public class Engine {
 

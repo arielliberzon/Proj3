@@ -4,6 +4,7 @@ import java.util.Objects;
 
 /**
  * class for the Tire object that affects the speed of the Car
+ * @author A. Liberzon & M. Skuncik
  */
 public class Tires {
 

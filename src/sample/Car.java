@@ -176,6 +176,7 @@ public class Car extends Rectangle {
     /**
      * Sets the carStats String based on the car's placement in the race
      * @param place value passed by the RaceTrack class
+     * M. Skuncik
      */
     public void setCarStats(int place){
         if (place == 1)
@@ -190,6 +191,10 @@ public class Car extends Rectangle {
             carStats = "place # is: " + place;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCarStats(){
         return carStats;
     }
@@ -197,6 +202,7 @@ public class Car extends Rectangle {
     /**
      * Adds up the speed value for all of the car's relevant components
      * sets that value as the car's speed
+     * M. Skuncik
      */
     private void setSpeed() {
         speed = engine.getSpeed() + tires.getSpeed() + transmission.getSpeed();

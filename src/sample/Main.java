@@ -20,13 +20,15 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        //Ask user for number of cars
-        //@author Ariel Liberzon
+        /** Ask user for number of cars
+         * @author A. Liberzon
+         */
         StartMenu startMenu = new StartMenu();
         int numberOfCars = startMenu.playerDisplay();
 
-        //Ask user to set up cars
-        //@author Ariel Liberzon
+        /** Ask user to set cars
+         * @author A. Liberzon
+         */
         Car[] cars = new Car[numberOfCars];
         for (int i = 0; i < numberOfCars; i++) {
             Car car = startMenu.carDisplay();

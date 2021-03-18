@@ -138,14 +138,27 @@ public class StartMenu {
         stage.setScene(scene);
         stage.showAndWait();
 
-        for (int i = 0; i < options.length; i++) {
-            if (options[i] == null)
-                car = createCar(name, defOpts);
-            if (options[options.length -1] != null)
-                car = createCar(name, options);
+        if (hasNull(options)) {
+            car = createCar(name, defOpts);
         }
+        else
+            car = createCar(name, options);
+
         playerCount++;
         return car;
+    }
+
+    /**
+     * Helper method to check if the user did not specify ALL components
+     * @param options user's picks
+     * @return true if something is empty
+     */
+    private boolean hasNull(String[] options) {
+        for(int i = 0; i < options.length; i++) {
+            if (options[i] == null)
+                return true;
+        }
+        return false;
     }
 
     /**

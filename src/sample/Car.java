@@ -169,8 +169,8 @@ public class Car extends Rectangle {
         return odometer;
     }
 
-    public void setOdometer(int odometer) {
-        this.odometer = odometer;
+    public void updateOdometer(int extraMiles) {
+        odometer += extraMiles;
     }
 
     /**

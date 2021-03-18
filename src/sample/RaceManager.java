@@ -6,6 +6,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import java.util.ArrayList;
 
+/**
+ * RaceManager handles the logic of the race. It manages how car moves and when they finish the race.
+ */
 public class RaceManager {
 
     //List of cars in track
@@ -17,107 +20,176 @@ public class RaceManager {
     //Length of track used to calculate when car finishes
     private int length;
 
-    //Still unused attributes
-    private String name;
-
+    //Keeps track of the place cars arrive to the finish checkpoint
     private int placeCount;
 
+    //Keeps track of the previous car that arrived to the finish checkpoint
     private Car prevCar;
 
+    //Holds the number of moves needed for the slowest car to finish the race
     private int moves;
 
+    //Variable to keep track where messages are displayed
     private int height = 100;
 
-    //Default constructor, default length of track.
+    /**
+     * Default constructor: Constructs a default race track
+     */
     public RaceManager() {
         length = 1200;
         placeCount = 0;
         prevCar = new Car();
     }
 
+    /**
+     * Parameter constructor
+     * @param cars the cars that will be on the track
+     * @param length the length of the track
+     * @param moves the number of moves needed for slowest car to finish
+     */
+    public RaceManager(ArrayList<Car> cars, int length, int moves) {
+        this.cars = cars;
+        this.length = length;
+        this.moves = moves;
+        placeCount = 0;
+        prevCar = new Car();
+    }
+
+    /**
+     * Method places cars i track after they are configured by user and sets up their routes.
+     * It also starts the timer for each car (Starts race), and calculates slowest speed.
+     * Calls helper {@link #setUpRoutes(Car, int)} to set up each car's route
+     * @param carArr the array containing all the cars
+     */
     public void placeCarsOnTrack(Car[] carArr) {
-        for (int i = 0; i < carArr.length; i++) {
-            setUpRoutes(carArr[i], i);
-            cars.add(carArr[i]);
+        for (int i = 0; i < carArr.length; i++) {      //For all cars
+            setUpRoutes(carArr[i], i);                 //Set up route
+            carArr[i].startTime();                     //Start counting time
+            cars.add(carArr[i]);                       //Add to list
         }
-        cars.forEach(car -> car.startTime());
-        calcSlowestSpeed();
+        calcSlowestSpeed();                             //Calculate slowest time
     }
 
+    /**
+     * Methods creates and adds the checkpoints to the track
+     */
     public void addCheckPoints(){
-        CheckPoint cp1 = new CheckPoint( 100, 100, "A");
-        CheckPoint cp2 = new CheckPoint( 500, 100, "B");
-        CheckPoint cp3 = new CheckPoint( 500, 500, "C");
-        CheckPoint cp4 = new CheckPoint( 100, 500, "D");
-        checkPoints.add(cp1);
-        checkPoints.add(cp2);
-        checkPoints.add(cp3);
-        checkPoints.add(cp4);
+        checkPoints.add(new CheckPoint( 100, 100, "A"));
+        checkPoints.add(new CheckPoint( 500, 100, "B"));
+        checkPoints.add(new CheckPoint( 500, 500, "C"));
+        checkPoints.add(new CheckPoint( 100, 500, "D"));
     }
 
-    // Get speed of the slowest car so simulator can run only for as long as needed for slowest car to finish
-    public int calcSlowestSpeed(){
+    /**
+     * Methods calculates the speed of the slowest car and calculates the number of moves needed
+     * to finish race.
+     */
+    private void calcSlowestSpeed(){
         int slowest = 1000;
-        for(int i = 0; i < cars.size(); i++){
-            if(cars.get(i).getSpeed() < slowest)
-                slowest = cars.get(i).getSpeed();
+        for (Car car : cars) {
+            if (car.getSpeed() < slowest)
+                slowest = car.getSpeed();
         }
         moves = getLength()/slowest;
-        return slowest;
     }
 
-    public int getMoves() {
-        return moves;
-    }
-
-    //Sets up the cars routes(In order of how they are going to pass them A, B, C, D or D, A, B, C etc.)
-    private void setUpRoutes(Car car, int index){
-        car.setOrientation(index + 1);
-        car.setSizes();
-        ArrayList<CheckPoint> path = new ArrayList<CheckPoint>(); //List to add checkpoints
-        while(index != 4) {                      //Add all in order
-            path.add(checkPoints.get(index));
-            index++;
+    /**
+     * Sets up the cars routes(In order of how they are going to pass them A, B, C, D or D, A, B, C etc.)
+     * Sets up initial orientation of cars
+     * @param car the car to set the route to
+     * @param carNumber the number of the car that is being set up
+     */
+    private void setUpRoutes(Car car, int carNumber){
+        car.setOrientation(carNumber + 1);                          //Set up orientation of car
+        car.setSizes();                                             //Set car to point in correct direction
+        ArrayList<CheckPoint> path = new ArrayList<CheckPoint>();   //List to add checkpoints
+        while(carNumber != 4) {                                     //Add all in order
+            path.add(checkPoints.get(carNumber));
+            carNumber++;
         }
-        if(path.size() != 4) {                   //If got to last start with the first until getting all 4
-            index = 0;
+        if(path.size() != 4) {                         //If last start with the first until getting all 4
+            carNumber = 0;
             while(path.size() != 4) {
-                path.add(checkPoints.get(index));
-                index++;
+                path.add(checkPoints.get(carNumber));
+                carNumber++;
             }
         }
-        car.setRoute(path);
-        car.setX(path.get(0).getCenterX());
+        car.setRoute(path);                             //Set route car will take
+        car.setX(path.get(0).getCenterX());             //Place car in starting checkpoint
         car.setY(path.get(0).getCenterY());
-        //Set up route for car
     }
 
-    //Moves cars (Erases old cars' positions and adds them to list of visual objects with new position)
-    //So that they are rendered in new position
+    /**
+     * Method is called to simulate the movement of all cars. Every time it is called it will
+     * delete the previous old car position and add the car to its new position to simulate movement.
+     * Calls helper {@link #moveCar(Car, ObservableList)} to deal with logic of movement
+     * @param list the list of visual objects to add car to
+     * @return the updated list with new positions
+     */
     public ObservableList moveCars (ObservableList list){
-        for(int i = 0; i < cars.size(); i++){                               //Remove cars that finished race
-            if(!cars.get(i).isActive())
-                cars.remove(cars.get(i));
+        cars.forEach(car -> list.remove(car));                      //Deleting old car positions
+        for (Car car : cars) {
+            moveCar(car, list);                                     //Move car
+            list.add(car);                                          //Add car to visible list
         }
-        cars.forEach(car -> list.remove(car));                              //Deleting old car positions in GUI
-        for (int i = 0; i < cars.size(); i++) {
-            moveCar(cars.get(i), list);                                              //Move car
-            list.add(cars.get(i));                                          //Add car to visible list
-        }
-        return list;                                                        //Return updated list
+        return list;                                                //Return updated list
     }
 
-    public void moveRight(Car car, int howMuch, ObservableList list){
-        CheckPoint nextCP = car.getRoute().get(car.getCurrentCP() + 1);
-        int nextXPos = (int) nextCP.getCenterX();                          //x position of next checkpoint
-        int curCarX = (int)car.getX();
+    /**
+     * Method handles the movement of the car if car is active.
+     * Depending on car position calls helper methods moveRight, moveLeft, moveUp or moveDown
+     * to move car in that direction.
+     * Helper methods will determine if the car is exceeding the next checkpoint and if so,
+     * turn the car and call the next helper method to continue rest of the movement.
+     * Calls method {@link #checkForFinish(Car, ObservableList)} to display result if car finished,
+     * and deactivate car in case race is completed by given car.
+     * @param car the car to move
+     * @param list the list of visible objects
+     * @return true if car moved, false otherwise
+     */
+    private boolean moveCar(Car car, ObservableList list) {
+        if (car.isActive()) {                           //Only move if car is active
+            int speed = car.getSpeed();
+            int orientation = car.getOrientation();
+            if (orientation == 1) {                     //Call move right
+                moveRight(car, speed);
+            } else if (orientation == 2) {              //Call move down
+                moveDown(car, speed);
+            } else if (orientation == 3) {              //Call move left
+                moveLeft(car, speed);
+            } else if (orientation == 4) {              //Call move up
+                moveUp(car, speed);
+            }
+            checkForFinish(car, list);                  //Check if car finished raced
+            return true;                                //Car moved
+        }
+        return false;                                   //Car did not move(it was not active)
+    }
+
+
+    /**
+     * Method moves a car to the right, it considers three cases:
+     * 1) If car is moved car will not exceed next checkpoint. ACTION: Move car right only
+     * 2) Car would exceed next checkpoint, and will not complete the race. ACTION: Move car to next checkpoint
+     *      rotate it, set new orientation, and move the car in the new direction whatever distance is left
+     * 3) Car would exceed next checkpoint, but at that time race would be complete. ACTION: Move car
+     *      to next checkpoint.
+     * Upon moving cars update odometer so cars keep track of the distance traveled.
+     * @param car the car to move
+     * @param howMuch the distance to move the car
+     */
+    private void moveRight(Car car, int howMuch){   
+        CheckPoint nextCP = car.getRoute().get(car.getCurrentCP() + 1);     //Next checkpoint
+        int nextXPos = (int) nextCP.getCenterX();                           //x position of next checkpoint
+        int curCarX = (int)car.getX();                                      //Current car x position
+        
         //Case 1: Car will not exceed next checkpoint when moving
         if(curCarX+howMuch <= nextXPos) {
             car.setX(curCarX + howMuch);
-            car.setOdometer(car.getOdometer()+howMuch);
+            car.updateOdometer(howMuch);
         }
 
-        //Case 2: Car will exceed next checkpoint when moving but will not complete race
+        //Case 2: Car will exceed next checkpoint when moving, and will not complete race
         else if(curCarX+howMuch > nextXPos && car.getOdometer()+howMuch <= length){
             int dif = nextXPos - curCarX;
             int remainder = howMuch - dif;
@@ -125,29 +197,39 @@ public class RaceManager {
             car.incrementCP();
             car.setOrientation(2);
             car.rotate();
-            car.setOdometer(car.getOdometer()+dif);
-            moveDown(car, remainder, list);
+            car.updateOdometer(dif);
+            moveDown(car, remainder);
         }
 
         //Case 3: Car will be arriving to last checkpoint
         else if(curCarX+howMuch > nextXPos  && car.getOdometer()+howMuch > length){
             int dif = nextXPos - curCarX;
             car.setX(curCarX + dif);
-            car.setOdometer(car.getOdometer()+dif);
-            //checkForFinish(car, list);                         //Turn off car and display results
+            car.updateOdometer(dif);
         }
 
     }
 
-    public void moveDown(Car car, int howMuch, ObservableList list){
-        CheckPoint nextCP = car.getRoute().get(car.getCurrentCP() + 1);
-        int nextYPos = (int) nextCP.getCenterY();                          //x position of next checkpoint
-        int curCarY = (int)car.getY();
+    /**
+     * Method moves a car down, it considers three cases:
+     * 1) If car is moved car will not exceed next checkpoint. ACTION: Move car down only
+     * 2) Car would exceed next checkpoint, and will not complete the race. ACTION: Move car to next checkpoint
+     *      rotate it, set new orientation, and move the car in the new direction whatever distance is left
+     * 3) Car would exceed next checkpoint, but at that time race would be complete. ACTION: Move car
+     *      to next checkpoint.
+     * Upon moving cars update odometer so cars keep track of the distance traveled.
+     * @param car the car to move
+     * @param howMuch the distance to move the car
+     */
+    public void moveDown(Car car, int howMuch){
+        CheckPoint nextCP = car.getRoute().get(car.getCurrentCP() + 1);    //Next checkpoint
+        int nextYPos = (int) nextCP.getCenterY();                          //Y position of next checkpoint
+        int curCarY = (int)car.getY();                                     //current y position of car
 
         //Case 1: Car will not exceed next checkpoint when moving
         if(curCarY+howMuch <= nextYPos) {
             car.setY(curCarY + howMuch);
-            car.setOdometer(car.getOdometer()+howMuch);
+            car.updateOdometer(+howMuch);
         }
 
         //Case 2: Car will exceed next checkpoint when moving but will not complete race
@@ -157,29 +239,39 @@ public class RaceManager {
             car.setY(curCarY + dif);
             car.incrementCP();
             car.rotate();
-            car.setOdometer(car.getOdometer()+dif);
+            car.updateOdometer(+dif);
             car.setOrientation(3);
-            moveLeft(car, remainder, list);
+            moveLeft(car, remainder);
         }
 
         //Case 3: Car will be arriving to last checkpoint
         else if(curCarY+howMuch > nextYPos  && car.getOdometer()+howMuch > length){
             int dif = nextYPos - curCarY;
             car.setY(curCarY + dif);
-            car.setOdometer(car.getOdometer()+dif);
-            //checkForFinish(car, list);                         //Turn off car and display results
+            car.updateOdometer(+dif);
         }
     }
 
-    public void moveLeft(Car car, int howMuch, ObservableList list){
-        CheckPoint nextCP = car.getRoute().get(car.getCurrentCP() + 1);
-        int nextXPos = (int) nextCP.getCenterX();                          //x position of next checkpoint
-        int curCarX = (int)car.getX();
+    /**
+     * Method moves a car to the left, it considers three cases:
+     * 1) If car is moved car will not exceed next checkpoint. ACTION: Move car left only
+     * 2) Car would exceed next checkpoint, and will not complete the race. ACTION: Move car to next checkpoint
+     *      rotate it, set new orientation, and move the car in the new direction whatever distance is left
+     * 3) Car would exceed next checkpoint, but at that time race would be complete. ACTION: Move car
+     *      to next checkpoint.
+     * Upon moving cars update odometer so cars keep track of the distance traveled.
+     * @param car the car to move
+     * @param howMuch the distance to move the car
+     */
+    public void moveLeft(Car car, int howMuch){
+        CheckPoint nextCP = car.getRoute().get(car.getCurrentCP() + 1);    //Next checkpoint
+        int nextXPos = (int) nextCP.getCenterX();                          //X position of next checkpoint
+        int curCarX = (int)car.getX();                                     //Current x position of car
 
         //Case 1: Car will not exceed next checkpoint when moving
         if(curCarX+howMuch >= nextXPos) {
             car.setX(curCarX - howMuch);
-            car.setOdometer(car.getOdometer()+howMuch);
+            car.updateOdometer(+howMuch);
         }
 
         //Case 2: Car will exceed next checkpoint when moving but will not complete race
@@ -189,30 +281,40 @@ public class RaceManager {
             car.setX(curCarX - dif);
             car.incrementCP();
             car.rotate();
-            car.setOdometer(car.getOdometer()+dif);
+            car.updateOdometer(+dif);
             car.setOrientation(4);
-            moveUp(car, remainder, list);
+            moveUp(car, remainder);
         }
 
         //Case 3: Car will be arriving to last checkpoint
         else if(curCarX+howMuch < nextXPos  && car.getOdometer()+howMuch > length){
             int dif = curCarX - nextXPos;
             car.setX(curCarX - dif);
-            car.setOdometer(car.getOdometer()+dif);
-            //checkForFinish(car, list);                         //Turn off car and display results
+            car.updateOdometer(+dif);
         }
 
     }
 
-    public void moveUp(Car car, int howMuch, ObservableList list){
-        CheckPoint nextCP = car.getRoute().get(car.getCurrentCP() + 1);
-        int nextYPos = (int) nextCP.getCenterY();                          //x position of next checkpoint
-        int curCarY = (int)car.getY();
+    /**
+     * Method moves a car up, it considers three cases:
+     * 1) If car is moved car will not exceed next checkpoint. ACTION: Move car up only
+     * 2) Car would exceed next checkpoint, and will not complete the race. ACTION: Move car to next checkpoint
+     *      rotate it, set new orientation, and move the car in the new direction whatever distance is left
+     * 3) Car would exceed next checkpoint, but at that time race would be complete. ACTION: Move car
+     *      to next checkpoint.
+     * Upon moving cars update odometer so cars keep track of the distance traveled.
+     * @param car the car to move
+     * @param howMuch the distance to move the car
+     */
+    public void moveUp(Car car, int howMuch){
+        CheckPoint nextCP = car.getRoute().get(car.getCurrentCP() + 1);    //Next checkpoint
+        int nextYPos = (int) nextCP.getCenterY();                          //Y position of next checkpoint
+        int curCarY = (int)car.getY();                                     //Current y position of car
 
         //Case 1: Car will not exceed next checkpoint when moving
         if(curCarY+howMuch >= nextYPos) {
             car.setY(curCarY - howMuch);
-            car.setOdometer(car.getOdometer()+howMuch);
+            car.updateOdometer(+howMuch);
         }
 
         //Case 2: Car will exceed next checkpoint when moving but will not complete race
@@ -222,67 +324,63 @@ public class RaceManager {
             car.setY(curCarY - dif);
             car.incrementCP();
             car.rotate();
-            car.setOdometer(car.getOdometer()+dif);
+            car.updateOdometer(+dif);
             car.setOrientation(1);
-            moveRight(car, remainder, list);
+            moveRight(car, remainder);
         }
 
         //Case 3: Car will be arriving to last checkpoint
         else if(curCarY+howMuch > nextYPos  && car.getOdometer()+howMuch > length){
             int dif = curCarY - nextYPos;
             car.setY(curCarY - dif);
-            car.setOdometer(car.getOdometer()+dif);
-            //finish(car, list);                         //Turn off car and display results
+            car.updateOdometer(+dif);
         }
     }
 
-    public boolean moveCar(Car car, ObservableList list) {
-        if (car.isActive()) { //Only move if car is active
-            int speed = car.getSpeed();
-            int orientation = car.getOrientation();
-            if (orientation == 1) {                     //Call move right, if any remainder will return true
-                moveRight(car, speed, list);
-            } else if (orientation == 2) {             //Call move right, if any remainder will return true
-                moveDown(car, speed, list);
-            } else if (orientation == 3) {             //Call move right, if any remainder will return true
-                moveLeft(car, speed, list);
-            } else if (orientation == 4) {             //Call move right, if any remainder will return true
-                moveUp(car, speed, list);
-            }
-            checkForFinish(car, list);
-            return true; //Car moved
-        }
-        return false; //Car did not move
-    }
-
+    /**
+     * Method checks if a car finished the race. It checks the odometer of the car to see if it
+     * traveled through all checkpoints.
+     * If car completed race it deactivates the car, ends the time count, gets its finishing position and
+     * adds the car result information to the visible list.
+     * @param car the car to check for completion
+     * @param list the list to add the car result information
+     * @return true if car finished race, false otherwise
+     */
     //Check if car finished. If odometer >=  length turn car off
     private boolean checkForFinish(Car car, ObservableList list) {
-        System.out.println("Check for finish is called");
-        if(car.getOdometer() >= length) {
-            System.out.println(car.toString());
-            car.setActive(false);
-            car.endTime();
-            if (car.getTime() != prevCar.getTime()) {
+        if(car.getOdometer() >= length) {                   //If car finished
+            car.setActive(false);                           //Deactivate car
+            car.endTime();                                  //End time count
+            if (car.getTime() != prevCar.getTime())         //Update its place in the results
                 placeCount++;
-            }
-            car.setCarStats(placeCount);
-            Text result = new Text(550, height, car.getCarStats());
+            car.setCarStats(placeCount);                    //Set the car information based on place
+            Text result = new Text(550, height, car.getCarStats()); //Create and place message
             height += 50;
-            list.add(result);
-            prevCar = car;
+            list.add(result);                               //Add message to visible objects
+            prevCar = car;                                  //Update prev car to this so next cars can count place
             return true;
         }
         return false;
     }
 
+    /**
+     * Methods places and creates lines in between checkpoints that represent roads.
+     * calls helper method {@link #placeRoad(CheckPoint, CheckPoint, ObservableList)} to create roads
+     * @param list the list of visible objects to add the lines to
+     */
     public void setLines(ObservableList list){
         placeRoad(checkPoints.get(0), checkPoints.get(1), list);
         placeRoad(checkPoints.get(1), checkPoints.get(2), list);
         placeRoad(checkPoints.get(2), checkPoints.get(3), list);
         placeRoad(checkPoints.get(3), checkPoints.get(0), list);
-
     }
 
+    /**
+     *
+     * @param start the checkpoint where line starts
+     * @param end the checkpoint where line ends
+     * @param list the list of visible objects to add the lines to
+     */
     private void placeRoad(CheckPoint start, CheckPoint end, ObservableList list) {
         Line line = new Line();
         line.setStrokeWidth(30);
@@ -294,41 +392,120 @@ public class RaceManager {
         list.add(line);
     }
 
-    //Get length of track
+
+    //toString and equals do not make sense for this class so they are not included.
+
+    //Getters and setters
+
+    /**
+     * Gets the number of moves needed to finish race
+     * @return the minimum number of moves for last car to finish race
+     */
+    public int getMoves() {
+        return moves;
+    }
+
+    /**
+     * Sets the number of moves needed to finish race
+     * @param moves the number to set
+     */
+    public void setMoves(int moves) {
+        this.moves =  moves;
+    }
+
+    /**
+     * Gets the length of the track
+     * @return the length of the track
+     */
     public int getLength() {
         return length;
     }
 
-
-
-    //Getters and setters not used
-
+    /**
+     * Sets the length of the track
+     * @param length the length of the track
+     */
     public void setLength(int length) {
         this.length = length;
     }
 
-
+    /**
+     * Gets the list of cars
+     * @return the list of cars
+     */
     public ArrayList<Car> getCars() {
         return cars;
     }
 
+    /**
+     * Sets the list of cars
+     * @param cars the list of cars
+     */
     public void setCars(ArrayList<Car> cars) {
         this.cars = cars;
     }
 
+    /**
+     * Gets the list of check points
+     * @return the list check points
+     */
     public ArrayList<CheckPoint> getCheckPoints() {
         return checkPoints;
     }
 
+    /**
+     * Sets the list of check points
+     * @param checkPoints  the list check points
+     */
     public void setCheckPoints(ArrayList<CheckPoint> checkPoints) {
         this.checkPoints = checkPoints;
     }
 
-    public String getName() {
-        return name;
+    /**
+     * Gets the place count
+     * @return the place count
+     */
+    public int getPlaceCount() {
+        return placeCount;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    /**
+     * Sets the place count
+     * @param placeCount the place count
+     */
+    public void setPlaceCount(int placeCount) {
+        this.placeCount = placeCount;
+    }
+
+    /**
+     * Gets the height of the message to display
+     * @return the height
+     */
+    public int getHeight() {
+        return height;
+    }
+
+    /**
+     * Sets the height of the message to display
+     * @param height the height to set
+     */
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    /**
+     * Gets the previous car that finished race
+     * @return previous finished car
+     */
+    public Car getPrevCar() {
+        return prevCar;
+    }
+
+    /**
+     * Sets the previous car that finished race
+     * @param prevCar the car to set
+     */
+    public void setPrevCar(Car prevCar) {
+        this.prevCar = prevCar;
     }
 }

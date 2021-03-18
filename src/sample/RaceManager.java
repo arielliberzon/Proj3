@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  * RaceManager handles the logic of the race. It manages how car moves and when they finish the race.
- * @author Samuel Hernandez Alvarez
+ * @author S. Hernandez
  */
 public class RaceManager {
 

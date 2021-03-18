@@ -58,6 +58,7 @@ public class Car extends Rectangle {
     /**
      * Default Constructor
      * used in race track
+     * @author A. Liberzon
      */
     public Car() {
         carNum = 0;
@@ -79,6 +80,7 @@ public class Car extends Rectangle {
      * @param tires
      * @param transmission
      * @param color
+     * @author A. Liberzon
      */
     public Car(int carNum, String name, Engine engine, Tires tires,
                Transmission transmission, Color color) {
@@ -94,6 +96,7 @@ public class Car extends Rectangle {
 
     /**
      * Set the size of the car based on the orientation
+     * @author S. Hernandez
      */
     public void setSizes(){
         if(orientation == 1 || orientation == 3){
@@ -109,6 +112,7 @@ public class Car extends Rectangle {
     /**
      * Rotate method changes the width and height of a car to make it seem like it turned
      * It just switches height and width.
+     * @author S. Hernandez
      */
     public void rotate(){
         double saved = getWidth();
@@ -117,11 +121,13 @@ public class Car extends Rectangle {
     }
 
     //Update last checkpoint passed
+    //@author S. Hernandez
     public void incrementCP() {
         currentCP++;
     }
 
     //Calculates time taken
+    //@author S. Hernandez
     public double endTime(){
         finish = Instant.now();
         long timeElapsed = Duration.between(start, finish).toMillis();
@@ -181,7 +187,7 @@ public class Car extends Rectangle {
     /**
      * Sets the carStats String based on the car's placement in the race
      * @param place value passed by the RaceTrack class
-     * M. Skuncik
+     * @author M. Skuncik
      */
     public void setCarStats(int place){
         if (place == 1)
@@ -196,10 +202,7 @@ public class Car extends Rectangle {
             carStats = "place # is: " + place;
     }
 
-    /**
-     *
-     * @return
-     */
+    //@author M. Skuncik
     public String getCarStats(){
         return carStats;
     }
@@ -207,7 +210,7 @@ public class Car extends Rectangle {
     /**
      * Adds up the speed value for all of the car's relevant components
      * sets that value as the car's speed
-     * M. Skuncik
+     * @author M. Skuncik
      */
     private void setSpeed() {
         speed = engine.getSpeed() + tires.getSpeed() + transmission.getSpeed();
@@ -226,6 +229,7 @@ public class Car extends Rectangle {
      * Overridden equals method
      * @param o Object
      * @return true if they're the same
+     * @author A. Liberzon
      */
     @Override
     public boolean equals(Object o) {

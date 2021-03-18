@@ -13,7 +13,7 @@ import javafx.util.Duration;
 /**
  * Main is the class that runs the simulation. The simulation is a car race where cars need to pass through all
  * checkpoints in order to complete the race. User is first allowed to pick the number of cars and configure them.
- * @author Samuel Hernandez
+ * @author S. Hernandez
  */
 public class Main extends Application {
 

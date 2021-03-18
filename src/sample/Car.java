@@ -4,6 +4,7 @@
  * each). Car is based on a rectangle and its orientation reflects its appearance on the
  * track. Every car also has a set of X and Y coordinates that determine its place on the
  * track along with references to its starting checkpoint and route.
+ * @author A. Liberzon, S. Hernandez, M. Skuncik (collaborative)
  */
 package sample;
 

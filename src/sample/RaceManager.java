@@ -221,7 +221,7 @@ public class RaceManager {
      * @param car the car to move
      * @param howMuch the distance to move the car
      */
-    public void moveDown(Car car, int howMuch){
+    private void moveDown(Car car, int howMuch){
         CheckPoint nextCP = car.getRoute().get(car.getCurrentCP() + 1);    //Next checkpoint
         int nextYPos = (int) nextCP.getCenterY();                          //Y position of next checkpoint
         int curCarY = (int)car.getY();                                     //current y position of car
@@ -263,7 +263,7 @@ public class RaceManager {
      * @param car the car to move
      * @param howMuch the distance to move the car
      */
-    public void moveLeft(Car car, int howMuch){
+    private void moveLeft(Car car, int howMuch){
         CheckPoint nextCP = car.getRoute().get(car.getCurrentCP() + 1);    //Next checkpoint
         int nextXPos = (int) nextCP.getCenterX();                          //X position of next checkpoint
         int curCarX = (int)car.getX();                                     //Current x position of car
@@ -306,7 +306,7 @@ public class RaceManager {
      * @param car the car to move
      * @param howMuch the distance to move the car
      */
-    public void moveUp(Car car, int howMuch){
+    private void moveUp(Car car, int howMuch){
         CheckPoint nextCP = car.getRoute().get(car.getCurrentCP() + 1);    //Next checkpoint
         int nextYPos = (int) nextCP.getCenterY();                          //Y position of next checkpoint
         int curCarY = (int)car.getY();                                     //Current y position of car

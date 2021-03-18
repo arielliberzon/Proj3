@@ -120,14 +120,19 @@ public class Car extends Rectangle {
         setHeight(saved);
     }
 
-    //Update last checkpoint passed
-    //@author S. Hernandez
+    /**
+     * Method helps to keep track of last checkpoint passed
+     * @author S. Hernandez
+     */
     public void incrementCP() {
         currentCP++;
     }
 
-    //Calculates time taken
-    //@author S. Hernandez
+    /**
+     * Method calculates the time taken by the car to complete the race
+     * @return the time taken
+     * @author S. Hernandez
+     */
     public double endTime(){
         finish = Instant.now();
         long timeElapsed = Duration.between(start, finish).toMillis();

@@ -17,11 +17,22 @@ import java.util.Objects;
 
 public class Car extends Rectangle {
 
+    //the car number
     private int carNum;
+
+    //the color of the car
     private Color color;
+
+    //Transmission of the car
     private Transmission transmission;
+
+    //Engine of the car
     private Engine engine;
+
+    //Tires of the car
     private Tires tires;
+
+    //Name of the car
     private String name;
 
     //Holds initial time
@@ -51,8 +62,10 @@ public class Car extends Rectangle {
     //Keeps track of length traveled
     private int odometer;
 
+    //Holds the car statistics
     private String carStats;
 
+    //Place that car finished race
     private int place;
 
     /**
